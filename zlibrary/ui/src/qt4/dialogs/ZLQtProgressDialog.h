@@ -22,8 +22,8 @@
 
 #include <string>
 
-#include <QtGui/QWidget>
-#include <QtGui/QCursor>
+#include <QWidget>
+#include <QCursor>
 
 #include <ZLProgressDialog.h>
 

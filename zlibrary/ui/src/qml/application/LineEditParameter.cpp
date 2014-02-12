@@ -17,10 +17,10 @@
  * 02110-1301, USA.
  */
 
-#include <QtGui/QBoxLayout>
-#include <QtGui/QLineEdit>
-#include <QtGui/QToolBar>
-#include <QtGui/QKeyEvent>
+#include <QBoxLayout>
+#include <QLineEdit>
+#include <QToolBar>
+#include <QKeyEvent>
 
 #include "ZLQmlApplicationWindow.h"
 #include "../util/ZLQtKeyUtil.h"

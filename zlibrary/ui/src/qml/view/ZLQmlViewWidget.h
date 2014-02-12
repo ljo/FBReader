@@ -20,8 +20,13 @@
 #ifndef __ZLQTVIEWWIDGET_H__
 #define __ZLQTVIEWWIDGET_H__
 
-#include <QtDeclarative/QDeclarativeView>
-#include <QtDeclarative/QDeclarativeItem>
+#if QT5
+#include <QQuickView>
+#include <QQuickPaintedItem>
+#else
+#include <QDeclarativeView>
+#include <QDeclarativeItem>
+#endif
 
 #include "../../../../core/src/view/ZLViewWidget.h"
 #include <ZLApplication.h>
@@ -34,15 +39,25 @@ class ZLQmlScrollBarInfo;
 
 class ZLQmlViewObject : public QObject, public ZLViewWidget {
 	Q_OBJECT
-	Q_PROPERTY(QDeclarativeItem* bookView READ bookView WRITE setBookView NOTIFY bookViewChanged)
+#if QT5
+    Q_PROPERTY(QQuickItem* bookView READ bookView WRITE setBookView NOTIFY bookViewChanged)
+#else
+    Q_PROPERTY(QDeclarativeItem* bookView READ bookView WRITE setBookView NOTIFY bookViewChanged)
+#endif
 	Q_PROPERTY(QObject* verticalScrollBar READ verticalScrollBar CONSTANT)
 	Q_PROPERTY(QObject* horizontalScrollBar READ horizontalScrollBar CONSTANT)
 	
 public:
 	ZLQmlViewObject(ZLApplication *application);
-	QWidget *widget();
-	QDeclarativeItem *bookView() const;
-	void setBookView(QDeclarativeItem *bookView);
+#if QT5
+    QWindow *widget();
+    QQuickItem *bookView() const;
+    void setBookView(QQuickItem *bookView);
+#else
+    QWidget *widget();
+    QDeclarativeItem *bookView() const;
+    void setBookView(QDeclarativeItem *bookView);
+#endif
 	QObject *verticalScrollBar() const;
 	QObject *horizontalScrollBar() const;
 	
@@ -123,10 +138,18 @@ private:
 	int myBottom;
 };
 
+#if QT5
+class ZLQmlViewWidget : public QQuickView {
+#else
 class ZLQmlViewWidget : public QDeclarativeView {
+#endif
 	
 public:
-	ZLQmlViewWidget(QWidget *parent, ZLQmlViewObject &holder);
+#if QT5
+    ZLQmlViewWidget(QWindow *parent, ZLQmlViewObject &holder);
+#else
+    ZLQmlViewWidget(QWidget *parent, ZLQmlViewObject &holder);
+#endif
 
 private:
 	void keyPressEvent(QKeyEvent *event);
@@ -142,13 +165,21 @@ private:
 	ZLQmlViewObject &myHolder;
 };
 
+#if QT5
+class ZLQmlBookContent : public QQuickPaintedItem {
+#else
 class ZLQmlBookContent : public QDeclarativeItem {
+#endif
 	Q_OBJECT
 	Q_PROPERTY(QObject* holder READ objectHolder WRITE setObjectHolder NOTIFY objectHolderChanged)
 	Q_PROPERTY(int visibleHeight READ visibleHeight WRITE setVisibleHeight NOTIFY visibleHeightChanged)
 
 public:
-	ZLQmlBookContent(QDeclarativeItem *parent = 0);
+#if QT5
+    ZLQmlBookContent(QQuickItem *parent = 0);
+#else
+    ZLQmlBookContent(QDeclarativeItem *parent = 0);
+#endif
 	virtual ~ZLQmlBookContent();
 	
 	bool eventFilter(QObject *, QEvent *);
@@ -157,8 +188,11 @@ public:
 	void setObjectHolder(QObject *objectHolder);
 	int visibleHeight() const;
 	void setVisibleHeight(int visibleHeight);
-	
+#if QT5
+    void paint(QPainter *painter);
+#else
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
+#endif
 	bool sceneEvent(QEvent *event);
 //	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 //	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
@@ -170,7 +204,7 @@ public Q_SLOTS:
 Q_SIGNALS:
 	void objectHolderChanged(QObject *objectHolder);
 	void visibleHeightChanged(int visibleHeight);
-	void tap(QObject *gesture);
+    void tap(QObject *gesture);
 	void swipe(QObject *gesture);
 	
 private:

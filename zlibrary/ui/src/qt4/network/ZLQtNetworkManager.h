@@ -22,13 +22,14 @@
 
 #include <ZLNetworkManager.h>
 #include <ZLNetworkRequest.h>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkProxyFactory>
-#include <QtNetwork/QNetworkDiskCache>
-#include <QtNetwork/QNetworkCookieJar>
-#include <QtNetwork/QSslError>
-#include <QtCore/QMutex>
-#include <QtCore/QSharedPointer>
+#include <QNetworkAccessManager>
+#include <QNetworkProxyFactory>
+#include <QNetworkDiskCache>
+#include <QNetworkCookieJar>
+#include <QNetworkCookie>
+#include <QSslError>
+#include <QMutex>
+#include <QSharedPointer>
 
 class ZLQtNetworkCache;
 class ZLQtNetworkCookieJar;

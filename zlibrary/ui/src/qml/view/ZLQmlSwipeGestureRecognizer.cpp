@@ -22,9 +22,9 @@
 ****************************************************************************/
 
 #include "ZLQmlSwipeGestureRecognizer.h"
-#include <QtGui/QMouseEvent>
-#include <QtCore/qmath.h>
-#include <QtCore/QDebug>
+#include <QMouseEvent>
+#include <qmath.h>
+#include <QDebug>
 
 ZLQmlSwipeGesture::ZLQmlSwipeGesture(QObject *parent) : QSwipeGesture(parent) {
 }

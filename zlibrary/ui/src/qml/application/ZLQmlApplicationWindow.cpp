@@ -17,20 +17,20 @@
  * 02110-1301, USA.
  */
 
-#include <QtGui/QApplication>
-#include <QtGui/QPixmap>
-#include <QtGui/QImage>
-#include <QtGui/QIcon>
-#include <QtGui/QToolBar>
-#include <QtGui/QMenuBar>
-#include <QtGui/QMenu>
-#include <QtGui/QToolButton>
-#include <QtGui/QLayout>
-#include <QtGui/QWheelEvent>
-#include <QtGui/QDockWidget>
-#include <QtGui/QFileSystemModel>
-#include <QtCore/QtDebug>
-#include <QtCore/QTimer>
+#include <QApplication>
+#include <QPixmap>
+#include <QImage>
+#include <QIcon>
+#include <QToolBar>
+#include <QMenuBar>
+#include <QMenu>
+#include <QToolButton>
+#include <QLayout>
+#include <QWheelEvent>
+#include <QDockWidget>
+#include <QFileSystemModel>
+#include <QtDebug>
+#include <QTimer>
 
 #include <ZLibrary.h>
 #include <ZLPopupData.h>
@@ -265,9 +265,13 @@ void ZLQmlApplicationWindow::setToolbarItemState(ZLToolbar::ItemPtr item, bool v
 	}
 }
 
-QDeclarativeListProperty<QObject> ZLQmlApplicationWindow::actions()
-{
-	QDeclarativeListProperty<QObject> actions(this, myActions);
+#if QT5
+QQmlListProperty<QObject> ZLQmlApplicationWindow::actions() {
+    QQmlListProperty<QObject> actions(this, myActions);
+#else
+QDeclarativeListProperty<QObject> ZLQmlApplicationWindow::actions() {
+    QDeclarativeListProperty<QObject> actions(this, myActions);
+#endif
 	actions.append = NULL;
 	actions.clear = NULL;
 	return actions;

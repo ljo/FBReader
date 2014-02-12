@@ -31,6 +31,9 @@ case "$1" in
 	pepperpad3)
 		toolbar_file=data/default/toolbar.full.xml
 		;;
+	sailfish)
+		toolbar_file=data/default/toolbar.sailfish.xml
+		;;
 	zaurus_640x480)
 		toolbar_file=data/default/toolbar.zaurus.xml
 		;;
@@ -61,6 +64,9 @@ case "$1" in
 		;;
 	moto)
 		menubar_file=data/default/menubar.moto.xml
+		;;
+	sailfish)
+		menubar_file=data/default/menubar.sailfish.xml
 		;;
 	*)
 		;;

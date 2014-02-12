@@ -17,8 +17,8 @@
  * 02110-1301, USA.
  */
 
-#include <QtGui/QApplication>
-#include <QtCore/QTextCodec>
+#include <QApplication>
+#include <QTextCodec>
 
 #include <ZLApplication.h>
 #include <ZLibrary.h>
@@ -51,8 +51,7 @@ void initLibrary() {
 }
 
 void ZLQmlLibraryImplementation::init(int &argc, char **&argv) {
-	new QApplication(argc, argv);
-	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf-8"));
+    new QApplication(argc, argv);
 
 	ZLibrary::parseArguments(argc, argv);
 

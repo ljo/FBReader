@@ -22,9 +22,9 @@
 
 #include <map>
 
-#include <QtGui/QMainWindow>
-#include <QtGui/QAction>
-#include <QtGui/QCursor>
+#include <QMainWindow>
+#include <QAction>
+#include <QCursor>
 
 class QDockWidget;
 class QToolBar;

@@ -17,11 +17,12 @@
  * 02110-1301, USA.
  */
 
-#include <QtCore/QEventLoop>
-#include <QtCore/QCoreApplication>
+#include <QEventLoop>
+#include <QCoreApplication>
 
 #include <ZLDialogManager.h>
-#include <QtCore/QDebug>
+#include <QDebug>
+#include <QPointer>
 
 #include "ZLQmlOptionsDialog.h"
 #include "ZLQmlDialogContent.h"
@@ -44,7 +45,7 @@ ZLQmlOptionsDialog::~ZLQmlOptionsDialog() {
 
 ZLDialogContent &ZLQmlOptionsDialog::createTab(const ZLResourceKey &key) {
 	ZLQmlDialogContent *tab = new ZLQmlDialogContent(tabResource(key));
-	mySections << QWeakPointer<QObject>(tab);
+    mySections << QPointer<QObject>(tab);
 	myTabs.push_back(tab);
 	emit sectionsChanged(sections());
 	return *tab;
@@ -52,7 +53,7 @@ ZLDialogContent &ZLQmlOptionsDialog::createTab(const ZLResourceKey &key) {
 
 QObjectList ZLQmlOptionsDialog::sections() const {
 	QObjectList result;
-	foreach (const QWeakPointer<QObject> &obj, mySections) {
+    foreach (const QPointer<QObject> &obj, mySections) {
 		if (!obj.isNull())
 			result << obj.data();
 	}

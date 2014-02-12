@@ -21,7 +21,7 @@
 #define __ZLQTIMAGEMANAGER_H__
 
 #include <map>
-#include <QtGui/QImage>
+#include <QImage>
 
 #include <ZLImageManager.h>
 

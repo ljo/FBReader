@@ -1,8 +1,8 @@
 #ifndef __ZLQTPAGEDIALOG_H__
 #define __ZLQTPAGEDIALOG_H__
 
-#include <QtGui/QDialog>
-#include <QtGui/QAction>
+#include <QDialog>
+#include <QAction>
 
 #include <shared_ptr.h>
 #include <ZLDialogContent.h>

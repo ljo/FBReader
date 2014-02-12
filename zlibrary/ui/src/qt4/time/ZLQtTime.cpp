@@ -18,8 +18,8 @@
  */
 
 #include "ZLQtTime.h"
-#include <QtCore/QThread>
-#include <QtCore/QMetaType>
+#include <QThread>
+#include <QMetaType>
 
 Q_DECLARE_METATYPE(shared_ptr<ZLRunnable>)
 

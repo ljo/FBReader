@@ -3,11 +3,11 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QThread>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkReply>
-#include <QtNetwork/QNetworkRequest>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 #include <QtCore/QUrl>
-#include <QtGui/QPixmap>
+#include <QPixmap>
 
 #include <ZLTreeTitledNode.h>
 

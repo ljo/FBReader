@@ -19,16 +19,16 @@
 
 #include <cctype>
 
-#include <QtGui/QCheckBox>
-#include <QtGui/QComboBox>
-#include <QtGui/QLabel>
-#include <QtGui/QGroupBox>
-#include <QtGui/QRadioButton>
-#include <QtGui/QPushButton>
-#include <QtGui/QSpinBox>
-#include <QtGui/QLineEdit>
-#include <QtGui/QSlider>
-#include <QtGui/QLayout>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QLabel>
+#include <QGroupBox>
+#include <QRadioButton>
+#include <QPushButton>
+#include <QSpinBox>
+#include <QLineEdit>
+#include <QSlider>
+#include <QLayout>
 
 #include <ZLStringUtil.h>
 #include <ZLDialogManager.h>

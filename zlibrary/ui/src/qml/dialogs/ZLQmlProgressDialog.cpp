@@ -17,10 +17,10 @@
  * 02110-1301, USA.
  */
 
-#include <QtCore/QThreadPool>
-#include <QtCore/QEventLoop>
-#include <QtCore/QCoreApplication>
-#include <QtCore/QDebug>
+#include <QThreadPool>
+#include <QEventLoop>
+#include <QCoreApplication>
+#include <QDebug>
 
 #include "ZLQmlProgressDialog.h"
 #include "ZLQtUtil.h"
@@ -62,6 +62,7 @@ void ZLQmlProgressDialog::setMessage(const std::string &message) {
 	myText = text;
 	emit textChanged(myText);
 }
+
 
 ZLQmlRunnable::ZLQmlRunnable(ZLRunnable &runnable, QObject *eventLoop)
     : myRunnable(runnable), myEventLoop(eventLoop) {

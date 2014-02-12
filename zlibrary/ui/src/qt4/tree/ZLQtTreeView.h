@@ -1,12 +1,12 @@
 #ifndef __ZLQTTREEVIEW_H__
 #define __ZLQTTREEVIEW_H__
 
-#include <QtGui/QApplication>
-#include <QtGui/QListView>
-#include <QtGui/QStyledItemDelegate>
-#include <QtGui/QPainter>
-#include <QtGui/QStyleOption>
-#include <QtGui/QStyle>
+#include <QApplication>
+#include <QListView>
+#include <QStyledItemDelegate>
+#include <QPainter>
+#include <QStyleOption>
+#include <QStyle>
 
 class ZLQtTreeView : public QListView {
     Q_OBJECT

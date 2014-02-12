@@ -1,8 +1,8 @@
-#include <QtGui/QApplication>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QAction>
-#include <QtGui/QPushButton>
-#include <QtCore/QDebug>
+#include <QApplication>
+#include <QVBoxLayout>
+#include <QAction>
+#include <QPushButton>
+#include <QDebug>
 
 #include <ZLDialogManager.h>
 #include "ZLQtProgressDialog.h"

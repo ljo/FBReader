@@ -18,9 +18,8 @@
  */
 
 #include "ZLQmlFileSystemModel.h"
-#include <QtCore/QTimer>
+#include <QHash>
 
-Q_DECLARE_METATYPE(QModelIndex)
 
 enum {
 	ZLQmlDirectoryRole = Qt::UserRole + 100,
@@ -30,11 +29,6 @@ enum {
 
 ZLQmlFileSystemModel::ZLQmlFileSystemModel(QObject *parent) :
     QFileSystemModel(parent) {
-	QHash<int, QByteArray> names = roleNames();
-	names[ZLQmlDirectoryRole] = "directory";
-	names[ZLQmlFileTypeRole] = "subtitle";
-	names.insertMulti(FileNameRole, "title");
-	setRoleNames(names);
 	setFilter(QDir::AllEntries | QDir::NoDot);
 	connect(this, SIGNAL(layoutChanged()), SLOT(onLayoutChanged()));
 	sort(0, Qt::AscendingOrder);
@@ -69,4 +63,13 @@ QVariant ZLQmlFileSystemModel::data(const QModelIndex &index, int role) const {
 void ZLQmlFileSystemModel::onLayoutChanged() {
 	myRootIndex = index(rootPath());
 	emit rootIndexChanged(rootIndex());
+}
+
+
+QHash<int, QByteArray> ZLQmlFileSystemModel::roleNames() const {
+    QHash<int, QByteArray> _roleNames = QFileSystemModel::roleNames();
+    _roleNames.insert(ZLQmlDirectoryRole, "directory");
+    _roleNames.insert(ZLQmlFileTypeRole, "subtitle");
+    _roleNames.insertMulti(QFileSystemModel::FileNameRole, "title");
+    return _roleNames;
 }

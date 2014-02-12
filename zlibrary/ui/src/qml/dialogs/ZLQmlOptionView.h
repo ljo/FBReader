@@ -22,7 +22,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QSize>
-#include <QtGui/QColor>
+#include <QColor>
 #include <QtCore/QVariant>
 
 #include <ZLOptionsDialog.h>

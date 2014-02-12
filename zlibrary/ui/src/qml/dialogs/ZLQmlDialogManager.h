@@ -21,9 +21,9 @@
 #define __ZLQTDIALOGMANAGER_H__
 
 #include <ZLDialogManager.h>
-#include <QtCore/QObject>
-#include <QtCore/QWeakPointer>
-#include <QtCore/QEvent>
+#include <QObject>
+#include <QPointer>
+#include <QEvent>
 
 class QWidget;
 
@@ -85,8 +85,8 @@ protected:
 		static Type eventType();
 
 	private:
-		QWeakPointer<QObject> object;
-		QWeakPointer<ZLQmlDialogManager> parent;
+        QPointer<QObject> object;
+        QPointer<ZLQmlDialogManager> parent;
 		DialogRequestedSignal method;
 	};
 };

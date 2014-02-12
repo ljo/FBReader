@@ -20,9 +20,16 @@
 #ifndef ZLQMLNETWORKACCESSFACTORY_H
 #define ZLQMLNETWORKACCESSFACTORY_H
 
-#include <QtDeclarative/QDeclarativeNetworkAccessManagerFactory>
+#include <QtGlobal>
 
+#if QT_VERSION >= 0x050000
+#include <QQmlNetworkAccessManagerFactory>
+class ZLQmlNetworkAccessFactory : public QQmlNetworkAccessManagerFactory {
+#else
+#include <QDeclarativeNetworkAccessManagerFactory>
 class ZLQmlNetworkAccessFactory : public QDeclarativeNetworkAccessManagerFactory {
+#endif
+
 public:
     ZLQmlNetworkAccessFactory();
 	

@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-#include <QtGui/QPainter>
+#include <QPainter>
 
 #include <ZLImage.h>
 

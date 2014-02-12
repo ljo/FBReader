@@ -24,8 +24,8 @@
 #ifndef ZLQMLSWIPEGESTURERECOGNIZER_H
 #define ZLQMLSWIPEGESTURERECOGNIZER_H
 
-#include <QtGui/QGestureRecognizer>
-#include <QtGui/QSwipeGesture>
+#include <QGestureRecognizer>
+#include <QSwipeGesture>
 #include <QtCore/QElapsedTimer>
 
 class ZLQmlSwipeGesture : public QSwipeGesture

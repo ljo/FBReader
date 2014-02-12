@@ -18,8 +18,8 @@
  */
 
 #include <ZLDialogManager.h>
-#include <QtCore/QEventLoop>
-#include <QtCore/QCoreApplication>
+#include <QEventLoop>
+#include <QCoreApplication>
 
 #include "ZLQmlDialog.h"
 #include "ZLQmlDialogContent.h"

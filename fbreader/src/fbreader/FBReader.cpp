@@ -83,7 +83,11 @@ FBReader &FBReader::Instance() {
 }
 
 FBReader::FBReader(const std::string &bookToOpen) :
+#if QT5
+	ZLApplication("harbour-fbreader"),
+#else
 	ZLApplication("FBReader"),
+#endif
 	QuitOnCancelOption(ZLCategoryKey::CONFIG, OPTIONS, "QuitOnCancel", false),
 	KeyScrollingDelayOption(ZLCategoryKey::CONFIG, "Scrollings", "Delay", 0, 2000, 100),
 	LinesToScrollOption(ZLCategoryKey::CONFIG, "SmallScrolling", "LinesToScroll", 1, 20, 1),

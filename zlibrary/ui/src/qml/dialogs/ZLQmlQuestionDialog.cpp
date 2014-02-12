@@ -18,8 +18,8 @@
  */
 
 #include "ZLQmlQuestionDialog.h"
-#include <QtCore/QEventLoop>
-#include <QtCore/QCoreApplication>
+#include <QEventLoop>
+#include <QCoreApplication>
 
 ZLQmlQuestionDialog::ZLQmlQuestionDialog(const QString &title, const QString &text,
                                          const QString &button0Text, const QString &button1Text, const QString &button2Text)

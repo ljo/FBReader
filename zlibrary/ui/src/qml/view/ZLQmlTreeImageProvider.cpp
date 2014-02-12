@@ -21,10 +21,14 @@
 #include "../dialogs/ZLQmlTree.h"
 #include <ZLTreeTitledNode.h>
 #include "../image/ZLQtImageManager.h"
-#include <QtCore/QDebug>
+#include <QDebug>
 
 ZLQmlTreeImageProvider::ZLQmlTreeImageProvider()
-    : QDeclarativeImageProvider(Pixmap)
+#if QT_VERSION >= 0x050000
+      :QQuickImageProvider(Pixmap)
+#else
+      :QDeclarativeImageProvider(Pixmap)
+#endif
 {
 }
 

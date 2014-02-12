@@ -20,8 +20,8 @@
 #ifndef ZLQMLFILESYSTEMMODEL_H
 #define ZLQMLFILESYSTEMMODEL_H
 
-#include <QtGui/QFileSystemModel>
-#include <QtDeclarative/qdeclarative.h>
+#include <QFileSystemModel>
+#include <QHash>
 
 class ZLQmlFileSystemModel : public QFileSystemModel
 {
@@ -36,6 +36,8 @@ public:
 	
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 
+    QHash<int, QByteArray> roleNames() const;
+
 signals:
 	void rootIndexChanged(const QVariant &rootIndex);
 
@@ -43,7 +45,7 @@ private slots:
 	void onLayoutChanged();
 	
 private:
-	QModelIndex myRootIndex;
+    QModelIndex myRootIndex;
 };
 
 #endif // ZLQMLFILESYSTEMMODEL_H

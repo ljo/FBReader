@@ -17,14 +17,19 @@
  * 02110-1301, USA.
  */
 
-#include <QtGui/QApplication>
-#include <QtGui/QMessageBox>
-#include <QtGui/QFileDialog>
-#include <QtGui/QClipboard>
-#include <QtGui/QDesktopWidget>
-#include <QtGui/QDesktopServices>
-#include <QtCore/QUrl>
-#include <QtCore/QDebug>
+#include <QApplication>
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QClipboard>
+#include <QDesktopWidget>
+#include <QDesktopServices>
+#include <QUrl>
+#include <QDebug>
+#if QT5
+#include <QtQml>
+#else
+#include <QtDeclarative>
+#endif
 
 #include "ZLQmlDialogManager.h"
 #include "ZLQmlDialog.h"
@@ -35,10 +40,9 @@
 #include "ZLQmlQuestionDialog.h"
 #include "ZLQmlTree.h"
 #include "ZLQtUtil.h"
-#include <QtDeclarative/qdeclarative.h>
 
-#include "../image/ZLQtImageManager.h"
 #include "ZLQmlOptionView.h"
+#include "../image/ZLQtImageManager.h"
 
 ZLQmlDialogManager::ZLQmlDialogManager() {
 	connect(this, SIGNAL(privateInformationBoxRequested(QString,QString,QString)),
@@ -143,7 +147,7 @@ template <typename Method>
 ZLQmlDialogManager::Event::Event(QObject *o, const ZLQmlDialogManager *p, Method m)
     : QEvent(eventType()), object(o), parent(const_cast<ZLQmlDialogManager*>(p)) {
 	method = static_cast<DialogRequestedSignal>(m);
-	qApp->postEvent(parent.data(), this);
+    qApp->postEvent(parent, this);
 }
 
 ZLQmlDialogManager::Event::~Event() {

@@ -1,10 +1,10 @@
 #ifndef __ZLQTTREEDIALOG_H__
 #define __ZLQTTREEDIALOG_H__
 
-#include <QtGui/QDialog>
-#include <QtGui/QListView>
-#include <QtGui/QProgressBar>
-#include <QtGui/QTreeView>
+#include <QDialog>
+#include <QListView>
+#include <QProgressBar>
+#include <QTreeView>
 
 #include <ZLTreeDialog.h>
 

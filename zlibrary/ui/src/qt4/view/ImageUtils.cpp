@@ -1,5 +1,5 @@
-#include <QtCore/QDebug>
-#include <QtGui/QPainter>
+#include <QDebug>
+#include <QPainter>
 
 #include "../image/ZLQtImageManager.h"
 

@@ -21,7 +21,7 @@
 
 #include "ZLQtUtil.h"
 #include <ZLColor.h>
-#include <QtGui/QColor>
+#include <QColor>
 
 QString qtButtonName(const ZLResourceKey &key) {
 	if (key.Name.empty())

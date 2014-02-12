@@ -17,18 +17,18 @@
  * 02110-1301, USA.
  */
 
-#include <QtGui/QApplication>
-#include <QtGui/QPixmap>
-#include <QtGui/QImage>
-#include <QtGui/QIcon>
-#include <QtGui/QToolBar>
-#include <QtGui/QMenuBar>
-#include <QtGui/QMenu>
-#include <QtGui/QToolButton>
-#include <QtGui/QLayout>
-#include <QtGui/QWheelEvent>
-#include <QtGui/QDockWidget>
-#include <QtCore/QObjectList>
+#include <QApplication>
+#include <QPixmap>
+#include <QImage>
+#include <QIcon>
+#include <QToolBar>
+#include <QMenuBar>
+#include <QMenu>
+#include <QToolButton>
+#include <QLayout>
+#include <QWheelEvent>
+#include <QDockWidget>
+#include <QObjectList>
 
 #include <ZLibrary.h>
 #include <ZLPopupData.h>

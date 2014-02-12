@@ -22,10 +22,13 @@
 
 #include <map>
 
-#include <QtGui/QMainWindow>
-#include <QtGui/QAction>
-#include <QtGui/QCursor>
-#include <QtDeclarative/qdeclarative.h>
+#include <QMainWindow>
+#include <QAction>
+#include <QCursor>
+
+#if QT5
+#include <QQmlListProperty>
+#endif
 
 #ifdef MEEGO_EDITION
 #include <policy/resource-set.h>
@@ -46,7 +49,11 @@ class ZLQmlMenuBar;
 class ZLQmlApplicationWindow : public QObject, public ZLApplicationWindow {
 	Q_OBJECT
 	Q_PROPERTY(bool fullSreen READ isFullscreen NOTIFY fullScreenChanged)
+#if QT5
+    Q_PROPERTY(QQmlListProperty<QObject> actions READ actions NOTIFY actionsChanged)
+#else
 	Q_PROPERTY(QDeclarativeListProperty<QObject> actions READ actions NOTIFY actionsChanged)
+#endif
 	Q_PROPERTY(QObject* menuBar READ menuBar CONSTANT)
 	Q_PROPERTY(QString bookTitle READ bookTitle NOTIFY bookTitleChanged)
 
@@ -82,13 +89,20 @@ private:
 	void setToggleButtonState(const ZLToolbar::ToggleButtonItem &button);
 	void setToolbarItemState(ZLToolbar::ItemPtr item, bool visible, bool enabled);
 	
-	QDeclarativeListProperty<QObject> actions();
-
+#if QT5
+    QQmlListProperty<QObject> actions();
+#else
+    QDeclarativeListProperty<QObject> actions();
+#endif
 	bool eventFilter(QObject *, QEvent *);
-	
+
 Q_SIGNALS:
 	void fullScreenChanged(bool fullScreen);
+#if QT5
+    void actionsChanged(const QQmlListProperty<QObject> &actions);
+#else
 	void actionsChanged(const QDeclarativeListProperty<QObject> &actions);
+#endif
 	void bookTitleChanged();
 	void mainMenuRequested();
 

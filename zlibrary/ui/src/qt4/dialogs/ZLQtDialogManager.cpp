@@ -17,11 +17,11 @@
  * 02110-1301, USA.
  */
 
-#include <QtGui/QApplication>
-#include <QtGui/QMessageBox>
-#include <QtGui/QFileDialog>
-#include <QtGui/QClipboard>
-#include <QtGui/QDesktopWidget>
+#include <QApplication>
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QClipboard>
+#include <QDesktopWidget>
 
 #include "ZLQtDialogManager.h"
 #include "ZLQtDialog.h"

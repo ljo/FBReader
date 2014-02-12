@@ -17,15 +17,15 @@
  * 02110-1301, USA.
  */
 
-#include <QtCore/QEventLoop>
-#include <QtCore/QCoreApplication>
-#include <QtCore/QDebug>
+#include <QEventLoop>
+#include <QCoreApplication>
+#include <QDebug>
 #include "ZLQmlDialogContent.h"
 #include "ZLQmlTree.h"
 #include <ZLTreeActionNode.h>
 #include <ZLTreePageNode.h>
 #include <ZLTimeManager.h>
-#include <QtCore/QTimer>
+#include <QTimer>
 
 Q_DECLARE_METATYPE(QModelIndex)
 Q_GLOBAL_STATIC(QSet<ZLQmlTreeDialog*>, aliveTrees)
@@ -66,13 +66,6 @@ ZLQmlTreeDialog::ZLQmlTreeDialog()
 {
 	aliveTrees()->insert(this);
 	qRegisterMetaType<QModelIndex>();
-	QHash<int, QByteArray> names = roleNames();
-	names[Qt::DisplayRole] = "title";
-	names[SubTitleRole] = "subtitle";
-	names[Qt::DecorationRole] = "iconSource";
-	names[ActivatableRole] = "activatable";
-	names[PageRole] = "page";
-	setRoleNames(names);
 }
 
 ZLQmlTreeDialog::~ZLQmlTreeDialog() {
@@ -212,7 +205,7 @@ QStringList ZLQmlTreeDialog::actions(const QModelIndex &index) {
 bool ZLQmlTreeDialog::isVisibleAction(const QModelIndex &index, int action) {
 	ZLTreeNode *node = treeNode(index);
 	const ActionVector &actions = node->actions();
-	if (action < 0 || action >= actions.size())
+    if (action < 0 || uint(action) >= actions.size())
 		return true;
 	return actions.at(action)->makesSense();
 }
@@ -322,6 +315,16 @@ ZLTreeNode *ZLQmlTreeDialog::treeNode(const QModelIndex &index) const {
 		return reinterpret_cast<ZLTreeNode*>(index.internalPointer());
 }
 
+QHash<int, QByteArray> ZLQmlTreeDialog::roleNames() const {
+    QHash<int, QByteArray> names = roleNames();
+    names[Qt::DisplayRole] = "title";
+    names[SubTitleRole] = "subtitle";
+    names[Qt::DecorationRole] = "iconSource";
+    names[ActivatableRole] = "activatable";
+    names[PageRole] = "page";
+    return names;
+}
+
 ZLQmlDataModel::ZLQmlDataModel() {
 }
 
@@ -417,8 +420,9 @@ void ZLQmlDataModel::onRowsRemoved(const QModelIndex &parent, int first, int las
 
 void ZLQmlDataModel::onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight) {
 	if (topLeft.parent() == myIndex || bottomRight.parent() == myIndex) {
-		QModelIndex left = createIndex(qMin(topLeft.row(), bottomRight.row()), 0, 0);
-		QModelIndex right = createIndex(qMax(topLeft.row(), bottomRight.row()), 0, 0);
+        QModelIndex left = createIndex(qMin(topLeft.row(), bottomRight.row()), 0);
+        QModelIndex right = createIndex(qMax(topLeft.row(), bottomRight.row()), 0);
 		emit dataChanged(left, right);
 	}
 }
+

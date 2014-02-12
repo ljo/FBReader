@@ -4,8 +4,8 @@
 #include <QtCore/QMap>
 
 #include <QtCore/QAbstractListModel>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtGui/QDialog>
+#include <QNetworkAccessManager>
+#include <QDialog>
 
 #include <ZLTreeListener.h>
 

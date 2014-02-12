@@ -11,11 +11,11 @@
 
 #include "../dialogs/ZLQtUtil.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QUrl>
-#include <QtGui/QPainter>
-#include <QtGui/QDesktopWidget>
-#include <QtGui/QApplication>
+#include <QDebug>
+#include <QUrl>
+#include <QPainter>
+#include <QDesktopWidget>
+#include <QApplication>
 
 ZLQtTreeModel::ZLQtTreeModel(ZLTreeListener::RootNode& rootNode, QDialog* treeDialog, shared_ptr<ZLExecutionData::Listener> listener, QObject *parent) :
     QAbstractListModel(parent), myRootNode(rootNode), myTreeDialog(treeDialog), myListener(listener) {

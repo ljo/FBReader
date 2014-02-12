@@ -20,9 +20,9 @@
 #ifndef __ZLQTOPTIONSDIALOG_H__
 #define __ZLQTOPTIONSDIALOG_H__
 
-#include <QtGui/QWidget>
-#include <QtGui/QTabWidget>
-#include <QtGui/QDialog>
+#include <QWidget>
+#include <QTabWidget>
+#include <QDialog>
 
 #include "../../../../core/src/desktop/dialogs/ZLDesktopOptionsDialog.h"
 

@@ -29,3 +29,11 @@ fbreader/FBReader
 *.a
 
 *.moc.cpp
+
+sailfish_build/
+make_sail.sh
+pkconfig/
+.deps/
+.libs/
+*.la
+test.txt

@@ -2,7 +2,7 @@
 #define __IMAGEUTILS_H__
 
 #include <QtCore/QUrl>
-#include <QtGui/QPixmap>
+#include <QPixmap>
 
 #include <ZLImage.h>
 

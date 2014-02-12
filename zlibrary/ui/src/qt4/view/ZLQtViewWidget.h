@@ -1,7 +1,7 @@
 #ifndef __ZLQTVIEWWIDGET_H__
 #define __ZLQTVIEWWIDGET_H__
 
-#include <QtGui/QWidget>
+#include <QWidget>
 
 #include "../../../../core/src/view/ZLViewWidget.h"
 #include <ZLApplication.h>

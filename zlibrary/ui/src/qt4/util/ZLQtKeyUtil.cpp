@@ -19,7 +19,7 @@
 
 #include <cctype>
 
-#include <QtGui/QKeyEvent>
+#include <QKeyEvent>
 
 #include <ZLUnicodeUtil.h>
 

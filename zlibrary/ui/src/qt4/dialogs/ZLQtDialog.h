@@ -20,8 +20,8 @@
 #ifndef __ZLQTDIALOG_H__
 #define __ZLQTDIALOG_H__
 
-#include <QtGui/QDialog>
-#include <QtGui/QLayout>
+#include <QDialog>
+#include <QLayout>
 
 #include <ZLDialog.h>
 

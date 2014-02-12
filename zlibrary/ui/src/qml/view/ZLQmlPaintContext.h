@@ -22,7 +22,7 @@
 
 #include <ZLPaintContext.h>
 
-#include <QtGui/QFont>
+#include <QFont>
 class QPainter;
 class QPixmap;
 

@@ -17,12 +17,12 @@
  * 02110-1301, USA.
  */
 
-#include <QtGui/QApplication>
-#include <QtGui/QDesktopWidget>
-#include <QtGui/QLayout>
-#include <QtGui/QPushButton>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QResizeEvent>
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QLayout>
+#include <QPushButton>
+#include <QButtonGroup>
+#include <QResizeEvent>
 
 #include <ZLDialogManager.h>
 

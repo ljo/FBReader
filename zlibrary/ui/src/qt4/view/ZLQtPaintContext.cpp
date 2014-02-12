@@ -1,8 +1,8 @@
-#include <QtGui/QPainter>
-#include <QtGui/QPixmap>
-#include <QtGui/QFontMetrics>
-#include <QtGui/QFontDatabase>
-#include <QtGui/QImage>
+#include <QPainter>
+#include <QPixmap>
+#include <QFontMetrics>
+#include <QFontDatabase>
+#include <QImage>
 
 #include <ZLImage.h>
 

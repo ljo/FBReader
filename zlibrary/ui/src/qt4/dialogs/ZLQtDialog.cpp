@@ -17,8 +17,8 @@
  * 02110-1301, USA.
  */
 
-#include <QtGui/QApplication>
-#include <QtGui/QPushButton>
+#include <QApplication>
+#include <QPushButton>
 
 #include <ZLDialogManager.h>
 

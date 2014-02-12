@@ -1,4 +1,4 @@
-#include <QtCore/QDebug>
+#include <QDebug>
 
 #include "ImageProvider.h"
 #include "ImageUtils.h"

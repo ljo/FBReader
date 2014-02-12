@@ -17,9 +17,9 @@
  * 02110-1301, USA.
  */
 
-#include <QtGui/QFileDialog>
-#include <QtCore/QEventLoop>
-#include <QtCore/QCoreApplication>
+#include <QFileDialog>
+#include <QEventLoop>
+#include <QCoreApplication>
 
 #include "ZLQmlOpenFileDialog.h"
 #include <ZLFile.h>

@@ -20,9 +20,21 @@
 #ifndef ZLQMLTREEIMAGEPROVIDER_H
 #define ZLQMLTREEIMAGEPROVIDER_H
 
-#include <QtDeclarative/QDeclarativeImageProvider>
+#include <QtGlobal>
 
-class ZLQmlTreeImageProvider : public QDeclarativeImageProvider
+
+#if QT_VERSION >= 0x050000
+#include <QQuickImageProvider>
+#else
+#include <QDeclarativeImageProvider>
+#endif
+
+class ZLQmlTreeImageProvider :
+#if QT_VERSION >= 0x050000
+        public QQuickImageProvider
+#else
+        public QDeclarativeImageProvider
+#endif
 {
 public:
     ZLQmlTreeImageProvider();

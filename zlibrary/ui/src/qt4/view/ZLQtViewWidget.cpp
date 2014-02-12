@@ -1,11 +1,11 @@
 #include <algorithm>
 
-#include <QtGui/QLayout>
-#include <QtGui/QScrollBar>
-#include <QtGui/QPainter>
-#include <QtGui/QPixmap>
-#include <QtGui/QMouseEvent>
-#include <QtCore/QDebug>
+#include <QLayout>
+#include <QScrollBar>
+#include <QPainter>
+#include <QPixmap>
+#include <QMouseEvent>
+#include <QDebug>
 
 #include <ZLibrary.h>
 #include <ZLLanguageUtil.h>

@@ -20,9 +20,9 @@
 #ifndef __ZLQTOPTIONSDIALOG_H__
 #define __ZLQTOPTIONSDIALOG_H__
 
-#include <QtGui/QWidget>
-#include <QtGui/QTabWidget>
-#include <QtGui/QDialog>
+#include <QWidget>
+#include <QTabWidget>
+#include <QDialog>
 
 #include "../../../../core/src/dialogs/ZLOptionsDialog.h"
 
@@ -55,7 +55,7 @@ Q_SIGNALS:
 	void finished();
 
 private:
-	QList<QWeakPointer<QObject> > mySections;
+    QList<QPointer<QObject> > mySections;
 	QString myOkButtonText;
 	QString myApplyButtonText;
 	QString myCancelButtonText;

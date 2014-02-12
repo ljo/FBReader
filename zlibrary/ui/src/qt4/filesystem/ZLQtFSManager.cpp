@@ -17,8 +17,8 @@
  * 02110-1301, USA.
  */
 
-#include <QtCore/QString>
-#include <QtCore/QDir>
+#include <QString>
+#include <QDir>
 
 #include "ZLQtFSManager.h"
 

@@ -1,5 +1,5 @@
-#include <QtCore/QDebug>
-#include <QtGui/QCommonStyle>
+#include <QDebug>
+#include <QCommonStyle>
 
 #include "ZLQtTreeModel.h"
 #include "ZLQtTreeView.h"

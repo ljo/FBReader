@@ -1,9 +1,9 @@
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QAction>
-#include <QtGui/QPushButton>
-#include <QtGui/QDirModel>
+#include <QVBoxLayout>
+#include <QAction>
+#include <QPushButton>
+#include <QDirModel>
 
-#include <QtCore/QDebug>
+#include <QDebug>
 
 #include <ZLDialogManager.h>
 #include <ZLResource.h>
