@@ -2,6 +2,7 @@
 <menubar>
 	<item id="library"/>
 	<item id="networkLibrary"/>
+	<item id="search"/>
 	<item id="addBook"/>
 	<item id="toc"/>
 	<item id="night"/>

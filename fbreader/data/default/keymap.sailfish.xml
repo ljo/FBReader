@@ -24,7 +24,6 @@
 	<binding key="&lt;=&gt;" action="increaseFont"/>
 	<binding key="&lt;-&gt;" action="decreaseFont"/>
 	<binding key="&lt;D&gt;" action="toggleIndicator"/>
-	<binding key="&lt;Return&gt;" action="toggleFullscreen"/>
 	<binding key="&lt;A&gt;" action="addBook"/>
 	<binding key="&lt;I&gt;" action="bookInfo"/>
 	<binding key="&lt;R&gt;" action="rotate"/>
