@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>Om FBReaderJ</book-title> <lang>sv</lang></title-info></description>
+<body>
+<title><p>Om FBReader &FBReaderVersion;</p></title>
+<p>FBReader är en e-boksläsare. FBReader stödjer bl a <code>ePub</code>- och <code>fb2</code>-filer. Böcker med DRM stödjs inte.</p>
+<p>FBReader distribueras under villkoren för <a l:href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a>.</p>
+<p>Lägg dina böcker i <code>Documents</code>-katalogen eller någon annan katalog du angett under <code>Boksökväg</code>. Böckerna dyker då upp i <a l:href="fbreader-action://library">biblioteket</a>. <a l:href="fbreader-action://networkLibrary">Nätbiblioteket</a> innehåller e-böcker du kan ladda ner.</p>
+
+<p>För att bläddra kan du svepa horisontellt över skärmen eller använda hårdvaruvolymknapparna om det finns sådana på apparaten.</p>
+<p><a l:href="fbreader-action://preferences">Inställningar</a> låter dej anpassa FBReader: färger, fonter, olika kataloger, sidbläddringsinställningar med mera.</p>
+<p><a l:href="fbreader-action://menu">FBReaders menyer</a> Om din apparat inte använder <code>hårdvarumenyknapp</code>, så följ ditt systems menystandard eller tryck på nedre delen av skärmen för aktivera menyn.</p>
+<p>Mycket nöje!</p>
+<empty-line/>
+<subtitle><p>Relaterat</p></subtitle>
+<p>Mer information om FBReader hittar du på <a l:href="http://www.fbreader.org/FBReaderJ">sajten</a>.</p>
+<p>Följ oss på <a l:href="http://twitter.com/fbreader">twitter</a>.</p>
+<p>Om du har frågor eller förslag kan du posta dem i <a l:href="http://groups.google.com/group/fbreader">FBReaders grupp på googlegroups</a>.</p>
+<p><a l:href="http://www.fbreader.org/donation/make.php">Donera</a> för att stödja utvecklingen av FBReader.</p>
+<p>Kontakta utgivarna <a l:href="mailto:contact@geometerplus.com">via e-post</a>.</p>
+</body>
+</FictionBook>
