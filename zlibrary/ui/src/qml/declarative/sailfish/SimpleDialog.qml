@@ -25,24 +25,46 @@ Dialog {
     property variant handler
     canAccept: handler.acceptButtons.length > 0
 
-    Column{
-        width: parent.width
+    SilicaFlickable {
+        anchors.fill: parent
+        contentHeight: contentColumn.height
 
-        DialogHeader {
-            title: handler.title
+        Column{
+            id: contentColumn
+            width: parent.width
+
+            DialogHeader {
+                acceptText: handler.acceptButtons[0]
+//                cancelText: handler.rejectButtons[0]
+            }
+            PageHeader {
+                title: handler.title
+            }
+
+            Column {
+                anchors {
+                    leftMargin: Theme.paddingLarge
+                    rightMargin: Theme.paddingLarge
+                    left: parent.left
+                    right: parent.right
+                }
+
+                DialogContent {
+                    content: handler.content
+                }
+
+    //            // T.O.D.O buttons on sailfish?..
+    //            Repeater {
+    //                model: handler.buttonNames
+    //                visible: count > 1
+    //                Button {
+    //                    text: modelData
+    //                    onClicked: handler.acceptButtons.indexOf(text) !== -1 ? accept() : reject()
+    //                    anchors.horizontalCenter: parent.horizontalCenterCenter
+    //                }
+    //            }
+            }
         }
-        DialogContent {
-            x: Theme.paddingLarge
-            content: handler.content
-        }
-        // dont show buttons...
-//        Repeater {
-//            model: handler.buttonNames
-//            Button {
-//                text: modelData
-//                onClicked: handler.acceptButtons.indexOf(text) !== -1 ? accept() : reject()
-//            }
-//        }
     }
 
     onStatusChanged: {
@@ -56,5 +78,5 @@ Dialog {
         }
     }
 
-    Component.onCompleted: console.log("SimpleDialog.qml", handler, handler.title)
+//    Component.onCompleted: console.log("SimpleDialog.qml", handler, handler.title)
 }

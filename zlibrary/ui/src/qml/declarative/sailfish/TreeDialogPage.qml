@@ -22,11 +22,13 @@ import Sailfish.Silica 1.0
 import org.fbreader 0.14
 
 Page {
-	id: root
+    id: root
     property variant handler
     property variant rootIndex
+    property bool isTreeRoot: true
     property Item contextMenu
-	
+    property bool fetchingChildren: false
+
     VisualDataModel {
         id: visualModel
         model: root.handler
@@ -68,19 +70,16 @@ Page {
                         root.handler.finish();
                     }
                 } else {
+                    var modelIndex = visualModel.modelIndex(index)
                     if (model.page) {
                         var args = {
                             "handler": root.handler,
-                            "modelIndex": visualModel.modelIndex(index),
+                            "modelIndex": modelIndex,
                             "imageSource": model.iconSource
                         }
-                        var page = pageStack.push("TreeDialogItemPage.qml", args)
+                        pageStack.push("TreeDialogItemPage.qml", args)
                     } else {
-                        var args = {
-                            "handler": root.handler,
-                            "rootIndex": visualModel.modelIndex(index)
-                        }
-                        var page = pageStack.push("TreeDialogPage.qml", args)
+                        fetchChildren(modelIndex)
                     }
                 }
             }
@@ -88,8 +87,8 @@ Page {
                 console.log("Press-and-hold", model.title)
                 var modelIndex = visualModel.modelIndex(index)
                 var actions = root.handler.actions(modelIndex)
-                console.log("actions:", actions)
-                if (actions){
+                console.log("item actions:", actions)
+                if (actions.length > 0){
                     if (!contextMenu)
                         contextMenu = contextMenuComponent.createObject(root,
                                     {"actions": actions, "modelIndex": modelIndex})
@@ -97,16 +96,86 @@ Page {
                 }
             }
         }
+
+//        Component.onCompleted: {
+//            console.log ("visualModel.count", visualModel.count)
+//            if (!root.isTreeRoot && visualModel.count < 1 ){ // TODO: !root.isTreeRoot is 1 wierd hack; visualModel.count returns 0 on rootNode. why?
+//                fetchChildren()
+//            }
+//        }
     }
-	
+
+    property variant modelIndexToFetch
+
+    function fetchChildren(modelIndex) {
+        fetchingChildren = true
+        modelIndexToFetch = modelIndex
+        root.handler.fetchChildren(modelIndex)
+    }
+
+    Connections {
+        target: fetchingChildren ? handler : null
+        onProgressChanged: {
+            var value, maximumValue
+            console.log("on progress changed", value, maximumValue)
+            if (value >= 0) {
+                if (maximumValue)
+                    busyLabel.text = value + " / " + maximumValue
+                else
+                    busyLabel.text = value
+            }
+        }
+        onProgressFinished: {
+            var error
+            if (!modelIndexToFetch || !fetchingChildren){
+                console.log("onProgressFinished but not fetching children???")
+                return
+            }
+
+            fetchingChildren = false
+            if (error === "") {
+                var args = {
+                    "handler": root.handler,
+                    "rootIndex": modelIndexToFetch,
+                    "isTreeRoot": false
+                }
+                modelIndexToFetch = null
+                var page = pageStack.push("TreeDialogPage.qml", args)
+            } else {
+                console.log(error)
+            }
+        }
+    }
+
     SilicaListView {
         id: listView
         anchors.fill: parent
         header: PageHeader { title: "" /*"Library"*/ }
         model: visualModel
         VerticalScrollDecorator {}
+        ViewPlaceholder {
+            enabled: listView.count === 0
+            text: "Empty"
+        }
     }
-	
+
+    Column {
+        visible: fetchingChildren
+        anchors.centerIn: parent
+        spacing: Theme.paddingLarge
+        BusyIndicator {
+            id: busyIndicator
+            running: visible
+            anchors.horizontalCenter: parent.horizontalCenter
+            size: BusyIndicatorSize.Large
+        }
+        Label {
+            id: busyLabel
+            anchors.horizontalCenter: parent.horizontalCenter
+            color: Theme.secondaryColor
+        }
+    }
+
     Component {
         id: contextMenuComponent
 
@@ -120,17 +189,35 @@ Page {
                 model: actions
                 MenuItem {
                     text: modelData
-                    //visible: root.handler.isVisibleAction(modelIndex, index)
+                    visible: root.handler.isVisibleAction(modelIndex, index)
                     onClicked: root.handler.run(modelIndex, index)
                 }
             }
         }
     }
 
-    Connections {
-        target: handler
-        onProgressChanged: {
-            console.log("on progress changed")
+    Component.onCompleted: {
+        if (root.isTreeRoot) {
+            handler.onFinished.connect(function() {
+                console.log("tree dialog finished")
+                popPage()
+            })
+        }
+    }
+
+    /*
+    * Pop this page and all after
+    */
+    function popPage() {
+        var previousPage = pageStack.previousPage(root)
+        pageStack.pop(previousPage, PageStackAction.Immediate)
+    }
+
+    onStatusChanged: {
+        if (isTreeRoot && status === PageStatus.Inactive && pageStack.depth === 1){
+            console.log("closing tree dialog")
+            if (handler !== null)
+                handler.finish()
         }
     }
 }

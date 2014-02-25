@@ -27,6 +27,7 @@ Column {
     property string imageSource: ""
 
     width: parent.width
+    spacing: Theme.paddingMedium
 
     Component.onCompleted: console.log("DialogContent", content.title, content.items)
 

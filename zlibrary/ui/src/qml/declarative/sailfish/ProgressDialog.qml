@@ -4,9 +4,13 @@ import Sailfish.Silica 1.0
 Rectangle {
 	id: root
     property variant handler
-	state: "closed"
     anchors.fill: parent
-    visible: opacity !== 0
+    opacity: 0
+    visible: opacity > 0
+
+    Behavior on opacity {
+        FadeAnimation {}
+    }
 
 	Label {
 		id: label
@@ -28,51 +32,22 @@ Rectangle {
 		height: ((parent.height - indicator.height) / 2.0 - label.height) / 2.0
 	}
 	
-	function open() {
-		root.state = "";
+    function show() {
+        root.opacity = 1
 	}
 	
-	function close() {
-		root.state = "closed";
+    function hide() {
+        root.opacity = 0
 	}
-	
-	states: [
-        State {
-            name: ""
-            PropertyChanges {
-				target: root
-                opacity: 1
-			}
-        },
-        State {
-            name: "closed"
-            PropertyChanges {
-				target: root
-				opacity: 0
-			}
-        }
-    ]
 
-    transitions: [
-        Transition {
-            from: ""
-			to: "closed"
-			reversible: true
-            FadeAnimation {
-                target: root
-                property: opacity
-            }
+    TouchBlocker {
+        anchors.fill: parent
+    }
+
+    Connections {
+        target: handler
+        onFinished: {
+            hide()
         }
-    ]
-		
-	// eat mouse events
-	MouseArea {
-		id: mouseEventEater
-		anchors.fill: parent
-		enabled: parent.visible
-	}
-	
-    Component.onCompleted: {
-        root.handler.finished.connect(root.close);
-	}
+    }
 }

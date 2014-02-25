@@ -27,5 +27,5 @@ Label {
     enabled: handler.enabled
     text: handler.name + ": " + handler.text
     wrapMode: Text.WordWrap
-    x: Theme.paddingLarge
+    anchors { leftMargin: Theme.paddingLarge; rightMargin: Theme.paddingLarge }
 }

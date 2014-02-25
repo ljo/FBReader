@@ -5,7 +5,7 @@ ApplicationWindow {
     id: root
 
     initialPage: Component { MainPage { } }
-    
+
     Connections {
         target: dialogManager
 
@@ -13,27 +13,27 @@ ApplicationWindow {
             console.log("onDialogRequested", object)
             var dialog = pageStack.push("SimpleDialog.qml", {handler : object})
         }
-		
+
         onOptionsDialogRequested: {
             console.log("onOptionsDialogRequested", object)
             var page = pageStack.push("OptionsDialog.qml", { handler: object })
         }
-		
+
         onFileDialogRequested: {
             console.log("onFileDialogRequested", object)
             var component = Qt.createComponent("OpenFileDialog.qml");
             root.openDialog(component.createObject(mainPage, { handler: object }));
         }
-		
+
         onTreeDialogRequested: {
             console.log("onTreeDialogRequested", object)
             var page = pageStack.push("TreeDialogPage.qml", { handler: object });
         }
-		
+
         onProgressDialogRequested: {
             console.log("onProgressDialogRequested", object)
-//            var component = Qt.createComponent("ProgressDialog.qml");
-//            root.openDialog(component.createObject(root, { handler: object }));
+            progressDialog.handler = object
+            progressDialog.show()
         }
 
         onQuestionDialogRequested: {
@@ -41,18 +41,40 @@ ApplicationWindow {
             //var component = Qt.createComponent("QuestionDialog.qml");
             root.openDialog(questionDialog.createObject(root, { handler: object }));
         }
-		
+
         onInformationBoxRequested: {
-            console.log("onInformationBoxRequested", object)
-            // var title, message, button
-            var args = { "titleText": title, "message": message, "acceptButtonText": button };
-            root.openDialog(queryDialog.createObject(mainPage, args));
+            var title, message, button
+            console.log("onInformationBoxRequested", title, message, button)
+            var args = { "title": title, "message": message, "acceptText": button }
+            pushWhenPageStackNotBusy("MessageDialog.qml", args, PageStackAction.Immediate)
         }
         onErrorBoxRequested: {
-            console.log("onErrorBoxRequested", object)
-            // var title, message, button
-            var args = { "titleText": title, "message": message, "acceptButtonText": button };
-            root.openDialog(queryDialog.createObject(mainPage, args));
+            var title, message, button
+            console.log("onErrorBoxRequested", title, message, button)
+            var args = { "title": title, "message": message, "acceptText": button }
+            pushWhenPageStackNotBusy("MessageDialog.qml", args, PageStackAction.Immediate)
+        }
+    }
+
+    ProgressDialog {
+         id: progressDialog
+    }
+
+    function pushWhenPageStackNotBusy(page, args, operationType){
+        if (pageStack.busy) {
+            pageStack.busyChanged.connect(whenNotBusy)
+        } else {
+            pageStack.push(page, args, operationType)
+        }
+
+        function whenNotBusy(){
+            if (!pageStack.busy){
+                var page = pageStack.push(page, args, operationType)
+                if (page !== null) // push success
+                    pageStack.busyChanged.disconnect(whenNotBusy)
+            } else {
+                console.log("pagestack busy!")
+            }
         }
     }
 

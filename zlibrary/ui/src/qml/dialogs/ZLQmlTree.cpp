@@ -33,14 +33,14 @@ Q_GLOBAL_STATIC(QSet<ZLQmlTreeDialog*>, aliveTrees)
 class ZLQmlActionListener : public ZLExecutionData::Listener {
 public:
 	ZLQmlActionListener(ZLTreeNode *node, ZLQmlTreeDialog *dialog);
-	
+
 	virtual void showPercent(int ready, int full);
 	virtual void finished(const std::string &error = std::string());
-	
+
 	int value() const { return myValue; }
 	int maximumValue() const { return myMaximum; }
 	bool isInfinite() const { return myValue == -1; }
-	
+
 private:
 	int myValue;
 	int myMaximum;
@@ -49,13 +49,13 @@ private:
 };
 
 ZLQmlActionListener::ZLQmlActionListener(ZLTreeNode *node, ZLQmlTreeDialog *dialog)
-    : myValue(-1), myMaximum(-1), myNode(node), myDialog(dialog) {
+	: myValue(-1), myMaximum(-1), myNode(node), myDialog(dialog) {
 }
 
 void ZLQmlActionListener::showPercent(int ready, int full) {
 	myValue = ready;
 	myMaximum = full;
-	myDialog->onProgressUpdated(myNode);
+	myDialog->onProgressUpdated(myNode, ready, full);
 }
 
 void ZLQmlActionListener::finished(const std::string &error) {
@@ -76,7 +76,7 @@ ZLQmlTreeDialog::ZLQmlTreeDialog()
 }
 
 ZLQmlTreeDialog::~ZLQmlTreeDialog() {
-    qDebug();
+	qDebug();
 	aliveTrees()->remove(this);
 }
 
@@ -121,7 +121,7 @@ QVariant ZLQmlTreeDialog::data(const QModelIndex &index, int role) const {
 	ZLTreeNode *node = treeNode(index);
 	if (!node)
 		return QVariant();
-	
+
 	switch (role) {
 	case Qt::DisplayRole:
 		if (ZLTreeTitledNode *titledNode = zlobject_cast<ZLTreeTitledNode*>(node))
@@ -171,7 +171,8 @@ void ZLQmlTreeDialog::fetchChildren(const QModelIndex &index) {
 		shared_ptr<ZLExecutionData::Listener> listener = new ZLQmlActionListener(node, this);
 		myListeners.insert(node, listener);
 		node->requestChildren(listener);
-		emit progressChanged();
+		ZLQmlActionListener *qmllistener = static_cast<ZLQmlActionListener*>(&*listener);
+		emit progressChanged(qmllistener->value(), qmllistener->maximumValue());
 	}
 }
 
@@ -213,7 +214,7 @@ QStringList ZLQmlTreeDialog::actions(const QModelIndex &index) {
 bool ZLQmlTreeDialog::isVisibleAction(const QModelIndex &index, int action) {
 	ZLTreeNode *node = treeNode(index);
 	const ActionVector &actions = node->actions();
-    if (action < 0 || uint(action) >= actions.size())
+	if (action < 0 || uint(action) >= actions.size())
 		return true;
 	return actions.at(action)->makesSense();
 }
@@ -232,22 +233,24 @@ class ZLQmlRunnableHelper : public ZLRunnable {
 public:
 	ZLQmlRunnableHelper(shared_ptr<ZLTreeAction> action) : myAction(action) {}
 	~ZLQmlRunnableHelper() {}
-	
+
 	void run() { myAction->run(); }
-	
+
 private:
 	shared_ptr<ZLTreeAction> myAction;
 };
 
-void ZLQmlTreeDialog::onProgressUpdated(ZLTreeNode *node) {
+void ZLQmlTreeDialog::onProgressUpdated(ZLTreeNode *node, int ready, int full) {
 	Q_UNUSED(node);
-	emit progressChanged();
+	emit progressChanged(ready, full);
 }
 
 void ZLQmlTreeDialog::onProgressFinished(ZLTreeNode *node, const std::string &error) {
-	Q_UNUSED(error);
-	if (myListeners.remove(node) > 0)
-		emit progressChanged();
+//	Q_UNUSED(error);
+	if (myListeners.remove(node) > 0){
+		emit progressChanged(0, 0);
+		emit progressFinished(QString::fromStdString(error));
+	}
 }
 
 void ZLQmlTreeDialog::run(const QModelIndex &index, int action) {
@@ -259,7 +262,8 @@ void ZLQmlTreeDialog::run(const QModelIndex &index, int action) {
 		myListeners.insert(node, listener);
 		runnable->setListener(listener);
 		ZLTimeManager::Instance().addAutoRemovableTask(new ZLQmlRunnableHelper(runnable));
-		emit progressChanged();
+		ZLQmlActionListener *qmllistener = static_cast<ZLQmlActionListener*>(&*listener);
+		emit progressChanged(qmllistener->value(), qmllistener->maximumValue());
 	}
 }
 
@@ -294,9 +298,9 @@ void ZLQmlTreeDialog::onNodeUpdated(ZLTreeNode *node) {
 
 void ZLQmlTreeDialog::run() {
 	qDebug() << Q_FUNC_INFO << __LINE__;
-    QEventLoop eventLoop;
+	QEventLoop eventLoop;
 	connect(this, SIGNAL(finished()), &eventLoop, SLOT(quit()), Qt::QueuedConnection);
-    eventLoop.exec(QEventLoop::AllEvents);
+	eventLoop.exec(QEventLoop::AllEvents);
 	qDebug() << Q_FUNC_INFO << __LINE__;
 	qApp->sendPostedEvents(0, QEvent::DeferredDelete);
 	qDebug() << Q_FUNC_INFO << __LINE__;
@@ -348,15 +352,15 @@ void ZLQmlDataModel::doSetModel(QAbstractItemModel *model) {
 		return;
 	myModel = model;
 	connect(model, SIGNAL(rowsAboutToBeInserted(QModelIndex,int,int)),
-	        SLOT(onRowsAboutToBeInserted(QModelIndex,int,int)));
+			SLOT(onRowsAboutToBeInserted(QModelIndex,int,int)));
 	connect(model, SIGNAL(rowsInserted(QModelIndex,int,int)),
-	        SLOT(onRowsInserted(QModelIndex,int,int)));
+			SLOT(onRowsInserted(QModelIndex,int,int)));
 	connect(model, SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)),
-	        SLOT(onRowsAboutToBeInserted(QModelIndex,int,int)));
+			SLOT(onRowsAboutToBeInserted(QModelIndex,int,int)));
 	connect(model, SIGNAL(rowsRemoved(QModelIndex,int,int)),
-	        SLOT(onRowsRemoved(QModelIndex,int,int)));
+			SLOT(onRowsRemoved(QModelIndex,int,int)));
 	connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-	        SLOT(onDataChanged(QModelIndex,QModelIndex)));
+			SLOT(onDataChanged(QModelIndex,QModelIndex)));
 	emit modelChanged(myModel.data());
 }
 
@@ -418,8 +422,8 @@ void ZLQmlDataModel::onRowsRemoved(const QModelIndex &parent, int first, int las
 
 void ZLQmlDataModel::onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight) {
 	if (topLeft.parent() == myIndex || bottomRight.parent() == myIndex) {
-        QModelIndex left = createIndex(qMin(topLeft.row(), bottomRight.row()), 0);
-        QModelIndex right = createIndex(qMax(topLeft.row(), bottomRight.row()), 0);
+		QModelIndex left = createIndex(qMin(topLeft.row(), bottomRight.row()), 0);
+		QModelIndex right = createIndex(qMax(topLeft.row(), bottomRight.row()), 0);
 		emit dataChanged(left, right);
 	}
 }

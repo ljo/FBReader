@@ -49,7 +49,7 @@ public:
 	
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 	
-	void onProgressUpdated(ZLTreeNode *node);
+    void onProgressUpdated(ZLTreeNode *node, int value, int full);
 	void onProgressFinished(ZLTreeNode *node, const std::string &error);
 	
 	Q_INVOKABLE void fetchChildren(const QModelIndex &index);
@@ -74,7 +74,8 @@ public Q_SLOTS:
 	
 Q_SIGNALS:
 	void finished();
-	void progressChanged();
+    void progressChanged(int value, int maxValue);
+    void progressFinished(QString error);
 	
 private:
 	QModelIndex createIndex(ZLTreeNode *node) const;
