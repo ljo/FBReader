@@ -20,25 +20,27 @@
 #ifndef __ZLQTOPTIONSDIALOG_H__
 #define __ZLQTOPTIONSDIALOG_H__
 
-#include <QWidget>
-#include <QTabWidget>
-#include <QDialog>
-
+// #include <QWidget>
+// #include <QTabWidget>
+// #include <QDialog>
+#include <QObject>
 #include "../../../../core/src/dialogs/ZLOptionsDialog.h"
+
 
 class ZLQmlOptionsDialog : public QObject, public ZLOptionsDialog {
 	Q_OBJECT
-	Q_PROPERTY(QObjectList sections READ sections NOTIFY sectionsChanged)
+	Q_PROPERTY(QList<QObject*> sections READ sections NOTIFY sectionsChanged)
 	Q_PROPERTY(QString okButtonText READ applyButtonText CONSTANT)
 	Q_PROPERTY(QString applyButtonText READ applyButtonText CONSTANT)
 	Q_PROPERTY(QString cancelButtonText READ cancelButtonText CONSTANT)
+	Q_PROPERTY(QString title READ title CONSTANT)
 public:
 	ZLQmlOptionsDialog(const ZLResource &resource, shared_ptr<ZLRunnable> applyAction, bool showApplyButton);
 	~ZLQmlOptionsDialog();
 	ZLDialogContent &createTab(const ZLResourceKey &key);
 
 protected:
-	QObjectList sections() const;
+	QList<QObject *> sections() const;
 	const std::string &selectedTabKey() const;
 	void selectTab(const ZLResourceKey &key);
 	bool runInternal();
@@ -46,19 +48,21 @@ protected:
 	QString okButtonText() const;
 	QString applyButtonText() const;
 	QString cancelButtonText() const;
+	QString title() const;
 	
 	Q_INVOKABLE void accept();
 	Q_INVOKABLE void reject();
 
 Q_SIGNALS:
-	void sectionsChanged(const QObjectList &sections);
+	void sectionsChanged(const QList<QObject*> &sections);
 	void finished();
 
 private:
-    QList<QPointer<QObject> > mySections;
+	QList<QWeakPointer<QObject> > mySections;
 	QString myOkButtonText;
 	QString myApplyButtonText;
 	QString myCancelButtonText;
+	QString myTitle;
 	std::string myEmptyString;
 	bool myShowApplyButton;
 	bool myResult;

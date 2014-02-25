@@ -90,7 +90,12 @@ private:
 	QScrollBar *addScrollBar(QGridLayout *layout, Qt::Orientation orientation, int x, int y);
 
 private:
-	ZLQmlViewWidget *myWidget;
+#if QT5
+    QQuickView *myWidget;
+#else
+    QDeclarativeView *myWidget;
+#endif
+//	ZLQmlViewWidget *myWidget;
 	ZLQmlBookContent *myContent;
 	ZLQmlScrollBarInfo *myVerticalInfo;
 	ZLQmlScrollBarInfo *myHorizontalInfo;
@@ -138,32 +143,32 @@ private:
 	int myBottom;
 };
 
-#if QT5
-class ZLQmlViewWidget : public QQuickView {
-#else
-class ZLQmlViewWidget : public QDeclarativeView {
-#endif
+// #if QT5
+// class ZLQmlViewWidget : public QQuickView {
+// #else
+// class ZLQmlViewWidget : public QDeclarativeView {
+// #endif
 	
-public:
-#if QT5
-    ZLQmlViewWidget(QWindow *parent, ZLQmlViewObject &holder);
-#else
-    ZLQmlViewWidget(QWidget *parent, ZLQmlViewObject &holder);
-#endif
+// public:
+// #if QT5
+    // ZLQmlViewWidget(QWindow *parent, ZLQmlViewObject &holder);
+// #else
+    // ZLQmlViewWidget(QWidget *parent, ZLQmlViewObject &holder);
+// #endif
 
-private:
-	void keyPressEvent(QKeyEvent *event);
-//	void paintEvent(QPaintEvent *event);
-//	void mousePressEvent(QMouseEvent *event);
-//	void mouseReleaseEvent(QMouseEvent *event);
-//	void mouseMoveEvent(QMouseEvent *event);
+// private:
+//  void keyPressEvent(QKeyEvent *event);
+// //	void paintEvent(QPaintEvent *event);
+// //	void mousePressEvent(QMouseEvent *event);
+// //	void mouseReleaseEvent(QMouseEvent *event);
+// //	void mouseMoveEvent(QMouseEvent *event);
 
-//	int x(const QMouseEvent *event) const;
-//	int y(const QMouseEvent *event) const;
+// //	int x(const QMouseEvent *event) const;
+// //	int y(const QMouseEvent *event) const;
 
-private:
-	ZLQmlViewObject &myHolder;
-};
+// private:
+	// ZLQmlViewObject &myHolder;
+// };
 
 #if QT5
 class ZLQmlBookContent : public QQuickPaintedItem {
@@ -212,6 +217,11 @@ private:
 	ZLQmlViewObject *myHolder;
 	int myVisibleHeight;
 //	QPointF myMousePos;
+};
+
+class MyEventFilterObject : public QObject {
+protected:
+    bool eventFilter(QObject *object, QEvent *event);
 };
 
 #endif /* __ZLQTVIEWWIDGET_H__ */

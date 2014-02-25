@@ -17,20 +17,24 @@
  * 02110-1301, USA.
  */
 
+#if QT5
+#include <QGuiApplication>
+#else
 #include <QApplication>
-#include <QPixmap>
-#include <QImage>
-#include <QIcon>
-#include <QToolBar>
-#include <QMenuBar>
-#include <QMenu>
-#include <QToolButton>
-#include <QLayout>
-#include <QWheelEvent>
-#include <QDockWidget>
-#include <QFileSystemModel>
-#include <QtDebug>
+#endif
+// #include <QPixmap>
+// #include <QImage>
+// #include <QIcon>
+// #include <QToolBar>
+// #include <QMenuBar>
+// #include <QMenu>
+// #include <QToolButton>
+// #include <QLayout>
+// #include <QWheelEvent>
+// #include <QDockWidget>
+// #include <QFileSystemModel>
 #include <QTimer>
+#include <QtDebug>
 
 #include <ZLibrary.h>
 #include <ZLPopupData.h>
@@ -63,7 +67,9 @@ ZLQmlApplicationWindow::ZLQmlApplicationWindow(ZLApplication *application) :
 }
 
 void ZLQmlApplicationWindow::init() {
+#ifndef SAILFISH// TODO: enable on sailfish
 	qmlRegisterType<ZLQmlFileSystemModel>("org.fbreader", 0, 14, "FileSystemModel");
+#endif
 	qmlRegisterType<ZLQmlBookContent>("org.fbreader", 0, 14, "BookView");
 	qmlRegisterType<ZLQmlDataModel>("org.fbreader", 0, 14, "DataModel");
 	qmlRegisterUncreatableType<ZLQmlToolBarItem>("org.fbreader", 0, 14, "ToolBarItem", "Type is uncreatable");

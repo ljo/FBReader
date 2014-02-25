@@ -36,24 +36,26 @@ ZLQmlOptionsDialog::ZLQmlOptionsDialog(const ZLResource &resource,
 	if (showApplyButton)
 		myApplyButtonText = ::qtButtonName(ZLDialogManager::APPLY_BUTTON);
 	myCancelButtonText = ::qtButtonName(ZLDialogManager::CANCEL_BUTTON);
+    myTitle = QString::fromStdString(resource[ZLDialogManager::DIALOG_TITLE].value());
 }
 
 ZLQmlOptionsDialog::~ZLQmlOptionsDialog() {
+    qDebug() << Q_FUNC_INFO << __LINE__;
 	mySections.clear();
 	emit sectionsChanged(sections());
 }
 
 ZLDialogContent &ZLQmlOptionsDialog::createTab(const ZLResourceKey &key) {
 	ZLQmlDialogContent *tab = new ZLQmlDialogContent(tabResource(key));
-    mySections << QPointer<QObject>(tab);
+    mySections << QWeakPointer<QObject>(tab);
 	myTabs.push_back(tab);
 	emit sectionsChanged(sections());
 	return *tab;
 }
 
-QObjectList ZLQmlOptionsDialog::sections() const {
-	QObjectList result;
-    foreach (const QPointer<QObject> &obj, mySections) {
+QList<QObject*> ZLQmlOptionsDialog::sections() const {
+    QList<QObject*> result;
+    foreach (const QWeakPointer<QObject> &obj, mySections) {
 		if (!obj.isNull())
 			result << obj.data();
 	}
@@ -98,4 +100,8 @@ QString ZLQmlOptionsDialog::applyButtonText() const {
 
 QString ZLQmlOptionsDialog::cancelButtonText() const {
 	return myCancelButtonText;
+}
+
+QString ZLQmlOptionsDialog::title() const {
+    return myTitle;
 }

@@ -22,17 +22,22 @@
 
 #include <QtGlobal>
 
-#if QT_VERSION >= 0x050000
-#include <QQmlNetworkAccessManagerFactory>
-class ZLQmlNetworkAccessFactory : public QQmlNetworkAccessManagerFactory {
+#if QT5
+    #include <QQmlNetworkAccessManagerFactory>
 #else
-#include <QDeclarativeNetworkAccessManagerFactory>
-class ZLQmlNetworkAccessFactory : public QDeclarativeNetworkAccessManagerFactory {
+    #include <QDeclarativeNetworkAccessManagerFactory>
+#endif
+
+class ZLQmlNetworkAccessFactory :
+#if QT5
+    public QQmlNetworkAccessManagerFactory {
+#else
+    public QDeclarativeNetworkAccessManagerFactory {
 #endif
 
 public:
     ZLQmlNetworkAccessFactory();
-	
+
     virtual QNetworkAccessManager *create(QObject *parent);
 };
 

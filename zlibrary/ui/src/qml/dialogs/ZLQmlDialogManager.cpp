@@ -17,18 +17,22 @@
  * 02110-1301, USA.
  */
 
-#include <QApplication>
-#include <QMessageBox>
-#include <QFileDialog>
+#if QT5
+  #include<QGuiApplication>
+#else
+  #include <QApplication>
+  #include <QMessageBox>
+  #include <QFileDialog>
+  #include <QDesktopWidget>
+#endif
 #include <QClipboard>
-#include <QDesktopWidget>
 #include <QDesktopServices>
 #include <QUrl>
 #include <QDebug>
 #if QT5
-#include <QtQml>
+  #include <QtQml>
 #else
-#include <QtDeclarative>
+  #include <QtDeclarative>
 #endif
 
 #include "ZLQmlDialogManager.h"
@@ -130,24 +134,32 @@ bool ZLQmlDialogManager::isClipboardSupported(ClipboardType type) const {
 void ZLQmlDialogManager::setClipboardText(const std::string &text, ClipboardType type) const {
 	if (text.empty())
 		return;
-	qApp->clipboard()->setText(
-				QString::fromStdString(text),
-				(type == CLIPBOARD_MAIN) ? QClipboard::Clipboard : QClipboard::Selection
-							  );
+#if QT5
+    QClipboard *clipboard = QGuiApplication::clipboard();
+#else
+    QClipboard *clipboard = qApp->clipboard();
+#endif
+	clipboard->setText(
+                QString::fromStdString(text),
+				(type == CLIPBOARD_MAIN) ? QClipboard::Clipboard : QClipboard::Selection);
 }
 
 void ZLQmlDialogManager::setClipboardImage(const ZLImageData &imageData, ClipboardType type) const {
-	qApp->clipboard()->setImage(
+#if QT5
+    QClipboard *clipboard = QGuiApplication::clipboard();
+#else
+    QClipboard *clipboard = qApp->clipboard();
+#endif
+	clipboard->setImage(
 	            *static_cast<const ZLQtImageData&>(imageData).image(),
-	            (type == CLIPBOARD_MAIN) ? QClipboard::Clipboard : QClipboard::Selection
-	                           );
+	            (type == CLIPBOARD_MAIN) ? QClipboard::Clipboard : QClipboard::Selection);
 }
 
 template <typename Method>
 ZLQmlDialogManager::Event::Event(QObject *o, const ZLQmlDialogManager *p, Method m)
-    : QEvent(eventType()), object(o), parent(const_cast<ZLQmlDialogManager*>(p)) {
+    : QEvent(eventType()), object(o), parent(const_cast<ZLQmlDialogManager *>(p)) {
 	method = static_cast<DialogRequestedSignal>(m);
-    qApp->postEvent(parent, this);
+    qApp->postEvent(parent.data(), this);
 }
 
 ZLQmlDialogManager::Event::~Event() {

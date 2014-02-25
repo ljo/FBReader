@@ -16,10 +16,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+ 
+#ifndef SAILFISH // TODO: enable on sailfish (without QWidgets)
 
 #include "ZLQmlFileSystemModel.h"
-#include <QHash>
-
 
 enum {
 	ZLQmlDirectoryRole = Qt::UserRole + 100,
@@ -73,3 +73,5 @@ QHash<int, QByteArray> ZLQmlFileSystemModel::roleNames() const {
     _roleNames.insertMulti(QFileSystemModel::FileNameRole, "title");
     return _roleNames;
 }
+
+#endif // SAILFISH

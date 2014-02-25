@@ -19,25 +19,31 @@
 
 #include <algorithm>
 
-#include <QLayout>
-#include <QScrollBar>
-#include <QPainter>
-#include <QPixmap>
-#include <QMouseEvent>
-#include <QApplication>
-#include <QTapGesture>
-#include <QStyleOptionGraphicsItem>
-#include <QElapsedTimer>
-#include <QDebug>
 #if !QT5
+    #include <QApplication>
     #include <QtOpenGL/QGLWidget>
     #include <QtDeclarative/QDeclarativeContext>
     #include <QtDeclarative/QDeclarativeEngine>
+    #include <QStyleOptionGraphicsItem>
 #else
+    #include <QGuiApplication>
     #include <QQmlContext>
+    #include <QQmlEngine>
 #endif
+#if SAILFISH
+    #include <sailfishapp/sailfishapp.h>
+#endif
+#include <QPainter>
+#include <QPixmap>
+#include <QElapsedTimer>
+#include <QDebug>
+// #include <QLayout>
+// #include <QScrollBar>
+// #include <QMouseEvent>
+// #include <QTapGesture>
+
+// #include "ZLQmlSwipeGestureRecognizer.h"
 #include "../dialogs/ZLQmlDialogManager.h"
-#include "ZLQmlSwipeGestureRecognizer.h"
 #include "../util/ZLQtKeyUtil.h"
 #include "../application/ZLQmlApplicationWindow.h"
 #include "ZLQmlTreeImageProvider.h"
@@ -49,28 +55,28 @@
 #include "ZLQmlViewWidget.h"
 #include "ZLQmlPaintContext.h"
 
-class MyQScrollBar : public QScrollBar {
+// class MyQScrollBar : public QScrollBar {
 
-public:
-	MyQScrollBar(Qt::Orientation orientation, QWidget *parent) : QScrollBar(orientation, parent) {
-	}
+// public:
+	// MyQScrollBar(Qt::Orientation orientation, QWidget *parent) : QScrollBar(orientation, parent) {
+	// }
 
-private:
-	void mouseMoveEvent(QMouseEvent *event) {
-		if (orientation() == Qt::Vertical) {
-			const int y = event->y();
-			if ((y <= 0) || (y >= height())) {
-				return;
-			}
-		} else {
-			const int x = event->x();
-			if ((x <= 0) || (x >= width())) {
-				return;
-			}
-		}
-		QScrollBar::mouseMoveEvent(event);
-	}
-};
+// private:
+	// void mouseMoveEvent(QMouseEvent *event) {
+		// if (orientation() == Qt::Vertical) {
+			// const int y = event->y();
+			// if ((y <= 0) || (y >= height())) {
+				// return;
+			// }
+		// } else {
+			// const int x = event->x();
+			// if ((x <= 0) || (x >= width())) {
+				// return;
+			// }
+		// }
+		// QScrollBar::mouseMoveEvent(event);
+	// }
+// };
 
 void ZLQmlViewObject::repaint()	{
 	if (myContent)
@@ -275,7 +281,7 @@ void ZLQmlViewObject::handleScrollBarPageStep(int steps) {
 	onScrollbarPageStep(ZLView::VERTICAL, steps);
 }
 
-QScrollBar *ZLQmlViewObject::addScrollBar(QGridLayout *layout, Qt::Orientation orientation, int x, int y) {
+// QScrollBar *ZLQmlViewObject::addScrollBar(QGridLayout *layout, Qt::Orientation orientation, int x, int y) {
 //	QScrollBar *scrollBar = new MyQScrollBar(orientation, myFrame);
 //	layout->addWidget(scrollBar, x, y);
 //	scrollBar->hide();
@@ -287,41 +293,66 @@ QScrollBar *ZLQmlViewObject::addScrollBar(QGridLayout *layout, Qt::Orientation o
 //		connect(scrollBar, SIGNAL(actionTriggered(int)), this, SLOT(onHorizontalSliderClicked(int)));
 //	}
 //	return scrollBar;
-	return 0;
-}
+	// return 0;
+// }
 
 ZLQmlViewObject::ZLQmlViewObject(ZLApplication *application)
     : ZLViewWidget((ZLView::Angle)application->AngleStateOption.value()), myApplication(application) {
-//	myFrame = new QWidget();
-//	QGridLayout *layout = new QGridLayout();
-//	layout->setMargin(0);
-//	layout->setSpacing(0);
-//	myFrame->setLayout(layout);
 	myContent = 0;
 	myVerticalInfo = new ZLQmlScrollBarInfo(this);
 	myHorizontalInfo = new ZLQmlScrollBarInfo(this);
-	myWidget = new ZLQmlViewWidget(0, *this);
-//	layout->addWidget(myWidget, 1, 1);
+#if SAILFISH
+	myWidget = SailfishApp::createView();
+#elif QT5
+    myWidget = new QQuickView;
+#else
+    myWidget = new QDeclarativeView;
+#endif
+    myWidget->engine()->setNetworkAccessManagerFactory(new ZLQmlNetworkAccessFactory);
+	myWidget->engine()->addImageProvider(QLatin1String("tree"), new ZLQmlTreeImageProvider);
+#if MEEGO_EDITION
+	QFont font;
+	font.setFamily(QLatin1String("Nokia Pure"));
+	font.setPointSize(24);
+	qApp->setFont(font);
+#endif
+#if !QT5
+	myWidget->setOptimizationFlags(QGraphicsView::DontSavePainterState);
+    myWidget->setViewport(new QGLWidget(this));
+#endif
+	
+    myWidget->rootContext()->setContextProperty(QLatin1String("objectHolder"), this);
+	myWidget->rootContext()->setContextProperty(QLatin1String("applicationInfo"),
+	                                  static_cast<ZLQmlApplicationWindow*>(&ZLApplicationWindow::Instance()));
+    myWidget->rootContext()->setContextProperty(QLatin1String("dialogManager"),
+                                      static_cast<ZLQmlDialogManager*>(&ZLDialogManager::Instance()));
 
-//	myRightScrollBar = addScrollBar(layout, Qt::Vertical, 1, 2);
-//	myLeftScrollBar = addScrollBar(layout, Qt::Vertical, 1, 0);
-//	myShowScrollBarAtRight = true;
-
-//	myBottomScrollBar = addScrollBar(layout, Qt::Horizontal, 2, 1);
-//	myTopScrollBar = addScrollBar(layout, Qt::Horizontal, 0, 1);
-//	myShowScrollBarAtBottom = true;
+	myWidget->setSource(QUrl::fromLocalFile(QString::fromStdString(ZLibrary::ZLibraryDirectory())
+	                              + "/declarative/Main.qml"));
+    
+    myWidget->installEventFilter(new MyEventFilterObject);
 }
+
+bool MyEventFilterObject::eventFilter(QObject *object, QEvent *event){
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *kevent = static_cast<QKeyEvent*>(event);
+        qDebug() << Q_FUNC_INFO << kevent->text();
+        ZLApplicationWindow::Instance().application().doActionByKey(ZLQtKeyUtil::keyName(kevent));
+    }
+    return false;
+}
+
 
 void ZLQmlViewObject::trackStylus(bool track) {
 //	qDebug("%s %s", Q_FUNC_INFO, track ? "true" : "false");
 #if QT5
-    // TODO
+    // TODO 
 #else
     myWidget->setMouseTracking(track);
 #endif
 }
 
-ZLQmlScrollBarInfo::ZLQmlScrollBarInfo(QObject *parent) : myEnabled(false) {
+ ZLQmlScrollBarInfo::ZLQmlScrollBarInfo(QObject *parent) : myEnabled(false) {
 	myHeight = myTop = myBottom = 0;
 }
 
@@ -366,50 +397,51 @@ int ZLQmlScrollBarInfo::bottom() const {
 	return myBottom;
 }
 
-#if QT5
-ZLQmlViewWidget::ZLQmlViewWidget(QWindow *parent, ZLQmlViewObject &holder) :
-    QQuickView(parent), myHolder(holder) {
-#else
-ZLQmlViewWidget::ZLQmlViewWidget(QWidget *parent, ZLQmlViewObject &holder) :
-    QDeclarativeView(parent), myHolder(holder) {
-#endif
-	//setBackgroundMode(NoBackground);
-	engine()->setNetworkAccessManagerFactory(new ZLQmlNetworkAccessFactory);
-	engine()->addImageProvider(QLatin1String("tree"), new ZLQmlTreeImageProvider);
-	QFont font;
-#if !QT5
-	font.setFamily(QLatin1String("Nokia Pure"));
-	font.setPointSize(24);
-#else
-	font.setFamily(QLatin1String("Droid Sans"));
-	font.setPointSize(26);
-#endif
-	qApp->setFont(font);
+// #if QT5
+// ZLQmlViewWidget::ZLQmlViewWidget(QWindow *parent, ZLQmlViewObject &holder) :
+    // QQuickView(parent), myHolder(holder) {
+// #else
+// ZLQmlViewWidget::ZLQmlViewWidget(QWidget *parent, ZLQmlViewObject &holder) :
+    // QDeclarativeView(parent), myHolder(holder) {
+// #endif
+	// //setBackgroundMode(NoBackground);
+	// engine()->setNetworkAccessManagerFactory(new ZLQmlNetworkAccessFactory);
+	// engine()->addImageProvider(QLatin1String("tree"), new ZLQmlTreeImageProvider);
+	// QFont font;
+// #if !QT5
+	// font.setFamily(QLatin1String("Nokia Pure"));
+	// font.setPointSize(24);
+    // qApp->setFont(font);
+// #else
+	// font.setFamily(QLatin1String("Droid Sans"));
+	// font.setPointSize(26);
+    // QGuiApplication::setFont(font);
+// #endif
 
-#if !QT5
-	setOptimizationFlags(QGraphicsView::DontSavePainterState);
-    setViewport(new QGLWidget(this));
-#endif
+// #if !QT5
+	// setOptimizationFlags(QGraphicsView::DontSavePainterState);
+    // setViewport(new QGLWidget(this));
+// #endif
 	
-	rootContext()->setContextProperty(QLatin1String("applicationInfo"),
-	                                  static_cast<ZLQmlApplicationWindow*>(&ZLApplicationWindow::Instance()));
-	rootContext()->setContextProperty(QLatin1String("objectHolder"), &holder);
-	ZLDialogManager *dialogManager = &ZLDialogManager::Instance();
-	QObject *qDialogManager = static_cast<ZLQmlDialogManager*>(dialogManager);
-	rootContext()->setContextProperty(QLatin1String("dialogManager"), qDialogManager);
+    // rootContext()->setContextProperty(QLatin1String("objectHolder"), &holder);
 
-	setSource(QUrl::fromLocalFile(QString::fromStdString(ZLibrary::ZLibraryDirectory())
-	                              + "/declarative/Main.qml"));
-}
+	// rootContext()->setContextProperty(QLatin1String("applicationInfo"),
+	                                  // static_cast<ZLQmlApplicationWindow*>(&ZLApplicationWindow::Instance()));
+    // rootContext()->setContextProperty(QLatin1String("dialogManager"),
+                                      // static_cast<ZLQmlDialogManager*>(&ZLDialogManager::Instance()));
 
-void ZLQmlViewWidget::keyPressEvent(QKeyEvent *event) {
-	ZLApplicationWindow::Instance().application().doActionByKey(ZLQtKeyUtil::keyName(event));
-#if QT5
-    return QQuickView::keyPressEvent(event);
-#else
-	return QDeclarativeView::keyPressEvent(event);
-#endif
-}
+	// setSource(QUrl::fromLocalFile(QString::fromStdString(ZLibrary::ZLibraryDirectory())
+	                              // + "/declarative/Main.qml"));
+// }
+
+// void ZLQmlViewWidget::keyPressEvent(QKeyEvent *event) {
+	// ZLApplicationWindow::Instance().application().doActionByKey(ZLQtKeyUtil::keyName(event));
+// #if QT5
+    // return QQuickView::keyPressEvent(event);
+// #else
+	// return QDeclarativeView::keyPressEvent(event);
+// #endif
+// }
 
 #if QT5
 ZLQmlBookContent::ZLQmlBookContent(QQuickItem *parent) : QQuickPaintedItem(parent), myHolder(0) {
@@ -485,21 +517,15 @@ void ZLQmlBookContent::repaint() {
 
 #if QT5
 void ZLQmlBookContent::paint(QPainter *painter) {
+#else
+void ZLQmlBookContent::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
+#endif
     if (!myHolder) {
         qDebug("%s: Can't find objectHolder", Q_FUNC_INFO);
         return;
     }
     painter->drawPixmap(0, 0, myPixmap);
 }
-#else
-void ZLQmlBookContent::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
-	if (!myHolder) {
-		qDebug("%s: Can't find objectHolder", Q_FUNC_INFO);
-		return;
-	}
-	painter->drawPixmap(0, 0, myPixmap);
-}
-#endif
 
 #if ! QT5
 bool ZLQmlBookContent::sceneEvent(QEvent *event) {
@@ -521,6 +547,7 @@ bool ZLQmlBookContent::sceneEvent(QEvent *event) {
     return QDeclarativeItem::sceneEvent(event);
 }
 #endif
+
 //void ZLQmlBookContent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 //	if (!myHolder)
 //		return;

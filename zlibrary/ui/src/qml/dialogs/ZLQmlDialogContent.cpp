@@ -17,10 +17,13 @@
  * 02110-1301, USA.
  */
 
+#if ! QT5
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QWidget>
+#include <QDesktopWidget>
 #include <QLayout>
+#endif
+
 
 #include "ZLQmlDialogContent.h"
 #include "ZLQmlOptionView.h"
@@ -47,7 +50,7 @@ void ZLQmlDialogContent::addOptions(const std::string &name0, const std::string 
 	++myRowCounter;
 }
 
-QObjectList ZLQmlDialogContent::items() const {
+QList<QObject*> ZLQmlDialogContent::items() const {
 	return myItems;
 }
 

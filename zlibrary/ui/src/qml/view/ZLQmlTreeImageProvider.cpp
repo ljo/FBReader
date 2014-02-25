@@ -23,11 +23,11 @@
 #include "../image/ZLQtImageManager.h"
 #include <QDebug>
 
-ZLQmlTreeImageProvider::ZLQmlTreeImageProvider()
-#if QT_VERSION >= 0x050000
-      :QQuickImageProvider(Pixmap)
+ZLQmlTreeImageProvider::ZLQmlTreeImageProvider() :
+#if QT5
+      QQuickImageProvider(Pixmap)
 #else
-      :QDeclarativeImageProvider(Pixmap)
+      QDeclarativeImageProvider(Pixmap)
 #endif
 {
 }

@@ -20,6 +20,7 @@
 #include <ZLDialogManager.h>
 #include <QEventLoop>
 #include <QCoreApplication>
+#include <QDebug>
 
 #include "ZLQmlDialog.h"
 #include "ZLQmlDialogContent.h"
@@ -32,6 +33,7 @@ ZLQmlDialog::ZLQmlDialog(const ZLResource &resource) {
 }
 
 ZLQmlDialog::~ZLQmlDialog() {
+    qDebug();
 }
 
 QString ZLQmlDialog::title() const {

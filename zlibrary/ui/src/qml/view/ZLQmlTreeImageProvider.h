@@ -23,14 +23,14 @@
 #include <QtGlobal>
 
 
-#if QT_VERSION >= 0x050000
+#if QT5
 #include <QQuickImageProvider>
 #else
 #include <QDeclarativeImageProvider>
 #endif
 
 class ZLQmlTreeImageProvider :
-#if QT_VERSION >= 0x050000
+#if QT5
         public QQuickImageProvider
 #else
         public QDeclarativeImageProvider

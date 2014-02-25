@@ -22,22 +22,24 @@
 
 #include <map>
 
-#include <QMainWindow>
-#include <QAction>
-#include <QCursor>
-
+// #include <QMainWindow>
+// #include <QAction>
+// #include <QCursor>
+#include <QStringList>
 #if QT5
-#include <QQmlListProperty>
+  #include <QQmlListProperty>
+#else
+  #include <QDeclarativeListProperty>
 #endif
 
 #ifdef MEEGO_EDITION
 #include <policy/resource-set.h>
 #endif
 
-class QDockWidget;
-class QToolBar;
-class QToolButton;
-class QLineEdit;
+// class QDockWidget;
+// class QToolBar;
+// class QToolButton;
+// class QLineEdit;
 
 class ZLPopupData;
 class ZLQmlToolBarItem;
@@ -94,6 +96,7 @@ private:
 #else
     QDeclarativeListProperty<QObject> actions();
 #endif
+
 	bool eventFilter(QObject *, QEvent *);
 
 Q_SIGNALS:
@@ -117,24 +120,24 @@ private:
 	QString myBookTitle;
 
 private:
-	class LineEditParameter : public VisualParameter {
+	// class LineEditParameter : public VisualParameter {
 
-	public:
-		LineEditParameter(QToolBar *toolbar, ZLQmlApplicationWindow &window, const ZLToolbar::ParameterItem &textFieldItem);
-		QAction *action() const;
-		void restoreOldValue();
+	// public:
+		// LineEditParameter(QToolBar *toolbar, ZLQmlApplicationWindow &window, const ZLToolbar::ParameterItem &textFieldItem);
+		// QAction *action() const;
+		// void restoreOldValue();
 
-	private:
-		std::string internalValue() const;
-		void internalSetValue(const std::string &value);
-		void setValueList(const std::vector<std::string> &values) {}
+	// private:
+		// std::string internalValue() const;
+		// void internalSetValue(const std::string &value);
+		// void setValueList(const std::vector<std::string> &values) {}
 
-	private:
-		QLineEdit *myEdit;
-		QAction *myAction;
-	};
+	// private:
+		// QLineEdit *myEdit;
+		// QAction *myAction;
+	// };
 
-friend class ZLQtLineEdit;
+// friend class ZLQtLineEdit;
 };
 
 class ZLQmlMenuBar : public QObject {

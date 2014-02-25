@@ -21,7 +21,7 @@
 #define ZLQMLTREE_H
 
 #include <QtCore/QAbstractItemModel>
-#include <QtCore/QPointer>
+#include <QtCore/QWeakPointer>
 #include <QtCore/QStringList>
 #include <QtCore/QMap>
 #include <ZLTreeDialog.h>
@@ -56,7 +56,7 @@ public:
 	Q_INVOKABLE QVariant progressData(const QModelIndex &index);
 	Q_INVOKABLE bool activate(const QModelIndex &index);
 	Q_INVOKABLE QStringList actions(const QModelIndex &index);
-    Q_INVOKABLE bool isVisibleAction(const QModelIndex &index, int action);
+	Q_INVOKABLE bool isVisibleAction(const QModelIndex &index, int action);
 	Q_INVOKABLE QObject *createPageContent(const QModelIndex &index);
 	Q_INVOKABLE void run(const QModelIndex &index, int action);
 	Q_INVOKABLE void finish();
@@ -71,7 +71,6 @@ public:
 	
 public Q_SLOTS:
 	void finishLater();
-    QHash<int, QByteArray> roleNames() const;
 	
 Q_SIGNALS:
 	void finished();
@@ -117,7 +116,7 @@ Q_SIGNALS:
 	void rootIndexChanged(const QModelIndex &index);
 	
 private:
-    QPointer<QAbstractItemModel> myModel;
+	QWeakPointer<QAbstractItemModel> myModel;
 	QModelIndex myIndex;
 };
 

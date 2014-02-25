@@ -20,7 +20,8 @@
 #ifndef ZLQMLFILESYSTEMMODEL_H
 #define ZLQMLFILESYSTEMMODEL_H
 
-#include <QFileSystemModel>
+#ifndef SAILFISH // TODO: enable on sailfish (without QWidgets)
+
 #include <QHash>
 
 class ZLQmlFileSystemModel : public QFileSystemModel
@@ -47,5 +48,7 @@ private slots:
 private:
     QModelIndex myRootIndex;
 };
+
+#endif // SAILFISH
 
 #endif // ZLQMLFILESYSTEMMODEL_H

@@ -21,14 +21,14 @@
 #define __ZLQTDIALOGCONTENT_H__
 
 #include "../../../../core/src/desktop/dialogs/ZLDesktopOptionsDialog.h"
-#include <QtCore/QObject>
+#include <QObject>
 
 class QWidget;
 class QGridLayout;
 
 class ZLQmlDialogContent : public QObject, public ZLDialogContent {
 	Q_OBJECT
-	Q_PROPERTY(QObjectList items READ items NOTIFY itemsChanged)
+	Q_PROPERTY(QList<QObject*> items READ items NOTIFY itemsChanged)
 	Q_PROPERTY(QString title READ title CONSTANT)
 public:
 	ZLQmlDialogContent(const ZLResource &resource);
@@ -38,17 +38,17 @@ public:
 	void addOptions(const std::string &name0, const std::string &tooltip0, ZLOptionEntry *option0,
 									const std::string &name1, const std::string &tooltip1, ZLOptionEntry *option1);
 
-	QObjectList items() const;
+	QList<QObject*> items() const;
 	QString title() const;
 
 private:
 	void createViewByEntry(const std::string &name, const std::string &tooltip, ZLOptionEntry *option, int fromColumn, int toColumn);
 
 Q_SIGNALS:
-	void itemsChanged(const QObjectList &items);
+	void itemsChanged(const QList<QObject*> &items);
 	
 private:
-	QObjectList myItems;
+	QList<QObject*> myItems;
 	QString myTitle;
 	int myRowCounter;
 };

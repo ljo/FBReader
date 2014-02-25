@@ -22,7 +22,7 @@
 
 #include <ZLDialogManager.h>
 #include <QObject>
-#include <QPointer>
+#include <QWeakPointer>
 #include <QEvent>
 
 class QWidget;
@@ -85,8 +85,8 @@ protected:
 		static Type eventType();
 
 	private:
-        QPointer<QObject> object;
-        QPointer<ZLQmlDialogManager> parent;
+        QWeakPointer<QObject> object;
+        QWeakPointer<ZLQmlDialogManager> parent;
 		DialogRequestedSignal method;
 	};
 };

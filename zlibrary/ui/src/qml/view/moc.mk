@@ -1,1 +1,1 @@
-SRCMOC = ZLQmlViewWidget.moc.cpp ZLQmlSwipeGestureRecognizer.moc.cpp
+SRCMOC = ZLQmlViewWidget.moc.cpp # -unused ZLQmlSwipeGestureRecognizer.moc.cpp

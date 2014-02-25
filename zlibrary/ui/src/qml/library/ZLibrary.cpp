@@ -17,7 +17,15 @@
  * 02110-1301, USA.
  */
 
-#include <QApplication>
+#if QT5
+  #include <QGuiApplication>
+  #if SAILFISH
+    #include <sailfishapp/sailfishapp.h>
+  #endif
+#else
+  #include <QApplication>
+#endif
+
 #include <QTextCodec>
 
 #include <ZLApplication.h>
@@ -51,7 +59,13 @@ void initLibrary() {
 }
 
 void ZLQmlLibraryImplementation::init(int &argc, char **&argv) {
+#if SAILFISH
+    SailfishApp::application(argc, argv);
+#elif QT5
+    new QGuiApplication(argc, argv);
+#else
     new QApplication(argc, argv);
+#endif
 
 	ZLibrary::parseArguments(argc, argv);
 

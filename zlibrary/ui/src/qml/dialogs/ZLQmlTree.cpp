@@ -66,9 +66,17 @@ ZLQmlTreeDialog::ZLQmlTreeDialog()
 {
 	aliveTrees()->insert(this);
 	qRegisterMetaType<QModelIndex>();
+	QHash<int, QByteArray> names = roleNames();
+	names[Qt::DisplayRole] = "title";
+	names[SubTitleRole] = "subtitle";
+	names[Qt::DecorationRole] = "iconSource";
+	names[ActivatableRole] = "activatable";
+	names[PageRole] = "page";
+	setRoleNames(names);
 }
 
 ZLQmlTreeDialog::~ZLQmlTreeDialog() {
+    qDebug();
 	aliveTrees()->remove(this);
 }
 
@@ -313,16 +321,6 @@ ZLTreeNode *ZLQmlTreeDialog::treeNode(const QModelIndex &index) const {
 		return &const_cast<ZLQmlTreeDialog*>(this)->rootNode();
 	else
 		return reinterpret_cast<ZLTreeNode*>(index.internalPointer());
-}
-
-QHash<int, QByteArray> ZLQmlTreeDialog::roleNames() const {
-    QHash<int, QByteArray> names = roleNames();
-    names[Qt::DisplayRole] = "title";
-    names[SubTitleRole] = "subtitle";
-    names[Qt::DecorationRole] = "iconSource";
-    names[ActivatableRole] = "activatable";
-    names[PageRole] = "page";
-    return names;
 }
 
 ZLQmlDataModel::ZLQmlDataModel() {
