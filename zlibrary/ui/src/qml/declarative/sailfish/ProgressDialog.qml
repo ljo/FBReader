@@ -5,15 +5,16 @@ Rectangle {
 	id: root
     property variant handler
 	state: "closed"
-	anchors.fill: parent
-    
+    anchors.fill: parent
+    visible: opacity !== 0
+
 	Label {
 		id: label
 		anchors { horizontalCenter: parent.horizontalCenter; bottom: dummySpace.top }
 		horizontalAlignment: Text.AlignHCenter
 		wrapMode: Text.Wrap
 		width: parent.width
-		text: root.handler.text
+        text: root.handler.text
 	}
     BusyIndicator {
 		id: indicator
@@ -40,7 +41,7 @@ Rectangle {
             name: ""
             PropertyChanges {
 				target: root
-				opacity: 0.9
+                opacity: 1
 			}
         },
         State {
@@ -71,7 +72,7 @@ Rectangle {
 		enabled: parent.visible
 	}
 	
-	Component.onCompleted: {
-		root.handler.finished.connect(root.close);
+    Component.onCompleted: {
+        root.handler.finished.connect(root.close);
 	}
 }

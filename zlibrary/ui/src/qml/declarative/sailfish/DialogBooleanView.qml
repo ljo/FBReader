@@ -17,42 +17,33 @@
  * 02110-1301, USA.
  */
 
-import QtQuick 1.0
-import com.nokia.meego 1.0
-import com.nokia.extras 1.0
+import QtQuick 2.0
+
 
 Item {
 	id: root
-	property QtObject handler
+	property variant handler
 	width: parent.width
-	height: textField.height
+	height: switchItem.height
 	visible: handler.visible
 	enabled: handler.enabled
-	onHandlerChanged: console.log("DialogSpinView", handler)
 	
 	Label {
-		anchors { left: root.left; right: textField.left; verticalCenter: textField.verticalCenter }
+		anchors { left: root.left; right: switchItem.left; verticalCenter: switchItem.verticalCenter }
 		anchors.rightMargin: 15
 		text: handler.name
 	}
 
-	TextField {
-		id: textField
+	Switch {
+		id: switchItem
 		anchors { top: root.top; right: root.right }
-		text: handler.value
-		placeholderText: "Value between " + handler.minimumValue + " and " + handler.maximumValue
-		validator: IntValidator { bottom: handler.minimumValue; top: handler.maximumValue }
-		errorHighlight: !acceptableInput
-		inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
-		onTextChanged: {
-			console.log("onTextChanged")
-			console.log(root.handler, root.handler.value, text, parseInt(text))
-			if (root.handler.value != text) root.handler.value = parseInt(text)
-		}
+		visible: handler.visible
+		onCheckedChanged: if (handler.checked != switchItem.checked) handler.checked = switchItem.checked
+		Component.onCompleted: switchItem.checked = root.handler.checked
 	}
 	
 	Connections {
 		target: root.handler
-		onValueChanged: textField.text = root.handler.value
+		onCheckedChanged: switchItem.checked = root.handler.checked
 	}
 }

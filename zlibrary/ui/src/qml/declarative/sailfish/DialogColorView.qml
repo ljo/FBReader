@@ -17,8 +17,8 @@
  * 02110-1301, USA.
  */
 
-import QtQuick 1.0
-import com.nokia.meego 1.0
+import QtQuick 2.0
+
 
 Item {
 	id: root

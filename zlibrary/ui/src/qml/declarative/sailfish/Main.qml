@@ -3,80 +3,69 @@ import Sailfish.Silica 1.0
 
 ApplicationWindow {
     id: root
-    
-    initialPage: MainPage {
-		id: mainPage
-	}
+
+    initialPage: Component { MainPage { } }
     
     Connections {
-		target: dialogManager
+        target: dialogManager
 
-		onDialogRequested: {
-			var component = Qt.createComponent("SimpleDialog.qml");
-			root.openDialog(component.createObject(mainPage, { handler: object }));
-		}
+        onDialogRequested: {
+            console.log("onDialogRequested", object)
+            var dialog = pageStack.push("SimpleDialog.qml", {handler : object})
+        }
 		
-		onOptionsDialogRequested: {
-			var component = Qt.createComponent("OptionsDialog.qml");
-			root.pageStack.push(component, { handler: object, rootWindow: root, component: component });
-		}
+        onOptionsDialogRequested: {
+            console.log("onOptionsDialogRequested", object)
+            var page = pageStack.push("OptionsDialog.qml", { handler: object })
+        }
 		
         onFileDialogRequested: {
-			var component = Qt.createComponent("OpenFileDialog.qml");
-			root.openDialog(component.createObject(mainPage, { handler: object }));
-		}
+            console.log("onFileDialogRequested", object)
+            var component = Qt.createComponent("OpenFileDialog.qml");
+            root.openDialog(component.createObject(mainPage, { handler: object }));
+        }
 		
         onTreeDialogRequested: {
-			console.log("bla-bla", object)
-			var component = Qt.createComponent("TreeDialogPage.qml");
-			root.pageStack.push(component, { handler: object, rootWindow: root, component: component });
-		}
+            console.log("onTreeDialogRequested", object)
+            var page = pageStack.push("TreeDialogPage.qml", { handler: object });
+        }
 		
-		onProgressDialogRequested: {
-			root.openDialog(progressDialog.createObject(root.pageStack.parent.parent, { handler: object }));
-		}
+        onProgressDialogRequested: {
+            console.log("onProgressDialogRequested", object)
+//            var component = Qt.createComponent("ProgressDialog.qml");
+//            root.openDialog(component.createObject(root, { handler: object }));
+        }
 
-		onQuestionDialogRequested: {
-			var component = Qt.createComponent("QuestionDialog.qml");
-			root.openDialog(component.createObject(root.pageStack.parent.parent, { handler: object }));
-		}
+        onQuestionDialogRequested: {
+            console.log("onQuestionDialogRequested", object)
+            //var component = Qt.createComponent("QuestionDialog.qml");
+            root.openDialog(questionDialog.createObject(root, { handler: object }));
+        }
 		
-		onInformationBoxRequested: {
-			// var title, message, button
-			var args = { "titleText": title, "message": message, "acceptButtonText": button };
-			root.openDialog(queryDialog.createObject(mainPage, args));
-		}
-		onErrorBoxRequested: {
-			// var title, message, button
-			var args = { "titleText": title, "message": message, "acceptButtonText": button };
-			root.openDialog(queryDialog.createObject(mainPage, args));
-		}
-	}
+        onInformationBoxRequested: {
+            console.log("onInformationBoxRequested", object)
+            // var title, message, button
+            var args = { "titleText": title, "message": message, "acceptButtonText": button };
+            root.openDialog(queryDialog.createObject(mainPage, args));
+        }
+        onErrorBoxRequested: {
+            console.log("onErrorBoxRequested", object)
+            // var title, message, button
+            var args = { "titleText": title, "message": message, "acceptButtonText": button };
+            root.openDialog(queryDialog.createObject(mainPage, args));
+        }
+    }
+
+
     function openDialog(dialog) {
         if (dialog.open !== undefined)
             dialog.open();
         if (dialog.statusChanged !== undefined) {
-            dialog.statusChanged.connect(
-                function() {
-                    if (dialog.status == DialogStatus.Closed) {
-                        dialog.destroy();
-                        // hook for toolbar activity
-                        if (root.pageStack.currentPage == mainPage)
-                            mainPage.state = ""
-                    }
+            dialog.statusChanged.connect(function() {
+                if (dialog.status === DialogStatus.Closed) {
+                    dialog.destroy();
+                }
             });
         }
-	}
-	
-	Component {
-		id: progressDialog
-		ProgressDialog {
-		}
-	}
-	
-	Component {
-		id: queryDialog
-        Dialog {
-		}
-	}
+    }
 }

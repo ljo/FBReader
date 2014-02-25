@@ -17,35 +17,21 @@
  * 02110-1301, USA.
  */
 
-import QtQuick 1.0
-import com.nokia.meego 1.0
+import QtQuick 2.0
 
-Item {
+
+ButtonColumn {
 	id: root
 	property variant handler
-	width: parent.width
-	height: textField.height
+	spacing: 10
 	visible: handler.visible
 	enabled: handler.enabled
 	
-	Label {
-		anchors { left: root.left; right: textField.left; verticalCenter: textField.verticalCenter }
-		anchors.rightMargin: 15
-		text: handler.name
-	}
-
-	TextField {
-		id: textField
-		anchors { left: root.horizontalCenter; top: root.top; right: root.right }
-		visible: handler.visible
-		enabled: handler.enabled
-		text: handler.text
-		echoMode: handler.password ? TextInput.PasswordEchoOnEdit : TextInput.Normal
-		onTextChanged: if (root.handler.text != text) root.handler.text = text
-	}
-	
-	Connections {
-		target: root.handler
-		onTextChanged: textField.text = root.handler.text
+	Repeater {
+		model: handler.options
+		RadioButton {
+			text: modelData
+			checked: handler.currentIndex == index
+		}
 	}
 }

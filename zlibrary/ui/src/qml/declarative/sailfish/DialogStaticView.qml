@@ -17,24 +17,15 @@
  * 02110-1301, USA.
  */
 
-import QtQuick 1.0
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
-Menu {
-	id: root
-	property variant item
-	MenuLayout {
-		id: menuLayout
-		Repeater {
-			id: repeater
-			model: root.item ? root.item.items : null
-			MenuItem {
-				parent: menuLayout
-				text: modelData
-				enabled: root.item.enabledItems.indexOf(modelData) != -1
-				visible: root.item.visibleItems.indexOf(modelData) != -1
-				onClicked: root.item.activate(index)
-			}
-		}
-	}
+Label {
+    property variant handler
+    width: parent.width
+    visible: handler.visible
+    enabled: handler.enabled
+    text: handler.name + ": " + handler.text
+    wrapMode: Text.WordWrap
+    x: Theme.paddingLarge
 }

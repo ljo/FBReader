@@ -17,14 +17,40 @@
  * 02110-1301, USA.
  */
 
-import QtQuick 1.0
-import com.nokia.meego 1.0
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
-Label {
+
+
+Item {
 	id: root
 	property variant handler
-	width: parent.width
+	property variant pathDelimiter: handler.pathDelimiter
+	property variant paths: handler.text.split(pathDelimiter)
+    height: row.height
+    width: parent.width
 	visible: handler.visible
 	enabled: handler.enabled
-	text: handler.name + ": " + handler.text
+
+    Component.onCompleted: console.log("dialogpathview", handler, pathDelimiter, paths, handler.text)
+
+    Row{
+        id: row
+        Label {
+            text: handler.name
+        }
+
+        TextField {
+            id: textField
+            text: handler.text
+            placeholderText: handler.name
+            echoMode: handler.password ? TextInput.PasswordEchoOnEdit : TextInput.Normal
+            onTextChanged: handler.text = text
+        }
+    }
+
+	Connections {
+        target: handler
+        onTextChanged: textField.text = handler.text
+	}
 }

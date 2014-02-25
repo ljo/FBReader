@@ -17,14 +17,12 @@
  * 02110-1301, USA.
  */
 
-import QtQuick 1.0
-import com.nokia.meego 1.0
+import QtQuick 2.0
+
 
 Item {
 	id: root
 	property variant handler
-	property variant pathDelimiter: handler.pathDelimiter
-	property variant paths: handler.text.split(pathDelimiter)
 	width: parent.width
 	height: textField.height
 	visible: handler.visible
