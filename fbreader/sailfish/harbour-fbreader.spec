@@ -1,11 +1,5 @@
 # Upstream: Nikolay Pultsin <geometer@fbreader.org>
 
-# >> macros
-%{!?qtc_qmake:%define qtc_qmake %qmake}
-%{!?qtc_qmake5:%define qtc_qmake5 %qmake5}
-%{!?qtc_make:%define qtc_make make}
-%{?qtc_builddir:%define _builddir %qtc_builddir}
-# << macros
 
 Summary: E-book reader
 Name: harbour-fbreader
@@ -18,14 +12,17 @@ Source0: %{name}-%{version}.tar.gz
 
 Packager: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>
 
+#BuildArch:armv7hl
+
 #Source: http://www.fbreader.org/fbreader-sources-%{version}.tgz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 Requires: sailfishsilica-qt5 >= 0.10.9 
-BuildRequires: pkgconfig(Qt5Core) pkgconfig(Qt5Quick) pkgconfig(Qt5Qml) pkgconfig(Qt5Widgets) pkgconfig(Qt5Gui) pkgconfig(Qt5Network) pkgconfig(Qt5OpenGL) pkgconfig(GLESv2)
-BuildRequires: zlib-devel, libpng-devel
+BuildRequires: pkgconfig(Qt5Core) pkgconfig(Qt5Quick) pkgconfig(Qt5Qml) pkgconfig(Qt5Gui) pkgconfig(Qt5Network)
+#, libpng-devel
+BuildRequires: zlib-devel 
 BuildRequires: desktop-file-utils
-BuildRequires: bzip2-devel, expat-devel, libjpeg-devel
+BuildRequires: bzip2-devel, expat-devel, sqlite-devel, libcurl-devel
 
 %description
 FBReader is an e-book reader.
@@ -36,41 +33,78 @@ Direct reading from zip, tar, gzip and bzip2 archives is also supported.
 #       can read compressed e-book archives.
 
 %prep
-%setup -q
+#%setup -q
 
 %build
-%qtc_qmake5
-%{__make} %{?_smp_mflags} INSTALLDIR=%{_prefix} TARGET_ARCH=sailfish UI_TYPE=qml TARGET_STATUS=release
+#%qtc_qmake5
+#%{__make} %{?_smp_mflags} INSTALLDIR=%{_prefix} TARGET_ARCH=sailfish UI_TYPE=qml TARGET_STATUS=release	DESTDIR=$RPM_BUILD_ROOT UNAME_MACHINE=armv7hl
+%makeinstall INSTALLDIR=%{_prefix} TARGET_ARCH=sailfish UI_TYPE=qml TARGET_STATUS=release DESTDIR=$RPM_BUILD_ROOT UNAME_MACHINE=armv7hl
 
 # %{buildroot} -> $RPM_BUILD_ROOT
 %install
 %{__rm} -rf $RPM_BUILD_ROOT
-%makeinstall INSTALL_ROOT=$RPM_BUILD_ROOT INSTALLDIR=%{_prefix} TARGET_ARCH=sailfish UI_TYPE=qml TARGET_STATUS=release DESTDIR=$RPM_BUILD_ROOT
+%makeinstall INSTALL_ROOT=$RPM_BUILD_ROOT INSTALLDIR=%{_prefix} DESTDIR=$RPM_BUILD_ROOT UNAME_MACHINE=armv7hl
 
 # %{buildroot} -> $RPM_BUILD_ROOT
 %clean
 %{__rm} -rf $RPM_BUILD_ROOT
 
+Privides: liblinebreak
+Provides: libfribidi
+
 # FBReader -> %{name}
 %files
-%defattr(-, root, root, 0755)
-%{_bindir}/%{name}
-%{_datadir}/%{name}
-#%{_datadir}/pixmaps/FBReader.png
-#%{_datadir}/pixmaps/FBReader
-%attr(644, root,root) %{_datadir}/applications/%{name}.desktop
-%attr(644, root,root) %{_datadir}/icons/hicolor/86x86/apps/%{name}.desktop
+%defattr(-, root, root, 0644)
+#%defattr(-, root, root, 0755)
+%attr(755, root,root) %{_bindir}/%{name}
+%{_libdir}/libfribidi.a
+%{_libdir}/libfribidi.so
+%{_libdir}/libfribidi.so.0
+%{_libdir}/libfribidi.so.0.3.5
+%{_libdir}/liblinebreak.a
+%{_libdir}/liblinebreak.so
+%{_libdir}/liblinebreak.so.2
+%{_libdir}/liblinebreak.so.2.0.0
+
+%{_includedir}/linebreakdef.h
+%{_includedir}/linebreak.h
+%attr(755, root,root) %{_includedir}/fribidi
+%attr(644, root,root) %{_includedir}/fribidi/*
+
+%{_datadir}/applications/%{name}.desktop
+
+%{_datadir}/icons/hicolor/16x16/apps/%{name}.png
+%{_datadir}/icons/hicolor/22x22/apps/%{name}.png
+%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
+%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
+%{_datadir}/icons/hicolor/86x86/apps/%{name}.png
+
+%attr(755, root,root) %{_datadir}/%{name}
+%attr(644, root,root) %{_datadir}/%{name}/default/*
+%attr(644, root,root) %{_datadir}/%{name}/formats/fb2/*
+%attr(644, root,root) %{_datadir}/%{name}/formats/html/*
+%attr(644, root,root) %{_datadir}/%{name}/formats/xhtml/*
+%attr(644, root,root) %{_datadir}/%{name}/help/*
+%attr(644, root,root) %{_datadir}/%{name}/icons/*
+%attr(644, root,root) %{_datadir}/%{name}/network/certificates/*
+%attr(644, root,root) %{_datadir}/%{name}/resources/*
+
+%attr(755, root,root) %{_datadir}/zlibrary
+%attr(644, root,root) %{_datadir}/zlibrary/declarative/*
+%attr(644, root,root) %{_datadir}/zlibrary/default/*
+%attr(644, root,root) %{_datadir}/zlibrary/resources/*
+
 #%{_libdir}/libzlcore.so.%{version}
 #%{_libdir}/libzltext.so.%{version}
 #%{_libdir}/zlibrary/ui/zlui-gtk.so
 #%{_datadir}/zlibrary
 
-#%post -p /sbin/ldconfig
+%post -p /sbin/ldconfig
 
 #%postun -p /sbin/ldconfig
 
 %changelog
-* Sun Jan 23 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.9.6-1 
+* Thu Jan 23 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-1 
 - new SailfishOS target.
 
 * Sun Nov 18 2007 Nikolay Pultsin <geometer@fbreader.org> - 0.8.8-1
