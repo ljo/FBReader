@@ -109,7 +109,11 @@ void ZLibrary::initApplication(const std::string &name) {
 #ifdef XMLCONFIGHOMEDIR
 		XMLCONFIGHOMEDIR + FileNameDelimiter + "." + name;
 #else
+#ifdef SAILFISH
+		"~" + FileNameDelimiter + "." + "local" + FileNameDelimiter + "share" + FileNameDelimiter + name;
+#else
 		"~" + FileNameDelimiter + "." + name;
+#endif
 #endif
 	ourDefaultFilesPathPrefix = ourApplicationDirectory + FileNameDelimiter + "default" + FileNameDelimiter;
 
