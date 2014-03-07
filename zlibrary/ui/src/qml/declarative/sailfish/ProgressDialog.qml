@@ -8,18 +8,15 @@ Rectangle {
     opacity: 0
     visible: opacity > 0
 
-    Behavior on opacity {
-        FadeAnimation {}
+    Label {
+        id: label
+        anchors { horizontalCenter: parent.horizontalCenter; bottom: dummySpace.top }
+        horizontalAlignment: Text.AlignHCenter
+        wrapMode: Text.Wrap
+        width: parent.width
+        text: handler ? handler.text : ""
     }
 
-	Label {
-		id: label
-		anchors { horizontalCenter: parent.horizontalCenter; bottom: dummySpace.top }
-		horizontalAlignment: Text.AlignHCenter
-		wrapMode: Text.Wrap
-		width: parent.width
-        text: root.handler.text
-	}
     BusyIndicator {
 		id: indicator
 		anchors.centerIn: parent
@@ -45,7 +42,7 @@ Rectangle {
     }
 
     Connections {
-        target: handler
+        target: handler ? handler : null
         onFinished: {
             hide()
         }
