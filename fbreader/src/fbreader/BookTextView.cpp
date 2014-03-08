@@ -230,6 +230,8 @@ void BookTextView::gotoParagraph(int num, bool end) {
 	}
 
 	FBView::gotoParagraph(num, end);
+	
+	FBReader::Instance().refreshWindow();
 }
 
 bool BookTextView::canUndoPageMove() {
