@@ -18,34 +18,23 @@
  */
 
 import QtQuick 2.0
-
+import Sailfish.Silica 1.0
 
 Item {
-	id: root
-	property variant handler
-	width: parent.width
-	height: textField.height
-	visible: handler.visible
-	enabled: handler.enabled
-	
-	Label {
-		anchors { left: root.left; right: textField.left; verticalCenter: textField.verticalCenter }
-		anchors.rightMargin: 15
-		text: handler.name
-	}
+    id: root
+    property variant handler
+    width: parent.width
+    visible: handler.visible
+    height: childrenRect.height
 
-	TextField {
-		id: textField
-		anchors { left: root.horizontalCenter; top: root.top; right: root.right }
-		visible: handler.visible
-		enabled: handler.enabled
-		text: handler.text
-		echoMode: handler.password ? TextInput.PasswordEchoOnEdit : TextInput.Normal
-		onTextChanged: if (root.handler.text != text) root.handler.text = text
-	}
-	
-	Connections {
-		target: root.handler
-		onTextChanged: textField.text = root.handler.text
-	}
+    TextField {
+        id: textField
+        width: parent.width
+        label: handler.name
+        placeholderText: label
+        enabled: handler.enabled
+        text: handler.text
+        echoMode: handler.password ? TextInput.PasswordEchoOnEdit : TextInput.Normal
+        onTextChanged: root.handler.text = text
+    }
 }

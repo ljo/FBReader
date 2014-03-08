@@ -349,6 +349,7 @@ void ZLQmlToolBarItem::setVisible(bool visible) {
 	emit visibleChanged(myVisible);
 }
 
+#ifdef MEEGO_EDITION
 const char *platformIcons[][2] = {
     { "addBook", "toolbar-add" },
 	{ "advancedSearchOnNetwork", "" },
@@ -370,6 +371,29 @@ const char *platformIcons[][2] = {
 	{ "toc", "toolbar-list" },
 	{ "undo", "toolbar-undo" }
 };
+#elif SAILFISH
+const char *platformIcons[][2] = {
+	{ "addBook", "add" },
+	{ "advancedSearchOnNetwork", "" },
+	{ "bookInfo", "" },
+	{ "byAuthor", "" },
+	{ "byTag", "" },
+	{ "findNext", "next" },
+	{ "findPrevious", "previous" },
+	{ "gotoHome", "home" },
+	{ "preferences", "" },
+	{ "redo", "forward" },
+	{ "rotate", "" },
+	{ "search", "" },
+	{ "showHelp", "" },
+	{ "library", "" },
+	{ "networkLibrary", "" },
+	{ "showReading", "" },
+	{ "showRecent", "" },
+	{ "toc", "" },
+	{ "undo", "back" }
+};
+#endif
 
 ZLQmlToolBarAction::ZLQmlToolBarAction(ZLToolbar::AbstractButtonItem &item, QObject *parent)
     : ZLQmlToolBarItem(item.type(), parent), myChecked(false), myItem(item) {

@@ -2,7 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 Rectangle {
-	id: root
+    id: root
     property variant handler
     anchors.fill: parent
     opacity: 0
@@ -16,26 +16,31 @@ Rectangle {
         width: parent.width
         text: handler ? handler.text : ""
     }
-
+    
     BusyIndicator {
-		id: indicator
-		anchors.centerIn: parent
+        id: indicator
+        anchors.centerIn: parent
         size: BusyIndicatorSize.Large
-		running: root.visible
-	}
-	Item {
-		id: dummySpace
-		anchors { bottom: indicator.top }
-		height: ((parent.height - indicator.height) / 2.0 - label.height) / 2.0
-	}
-	
+        running: root.visible
+    }
+    
+    Item {
+        id: dummySpace
+        anchors { bottom: indicator.top }
+        height: ((parent.height - indicator.height) / 2.0 - label.height) / 2.0
+    }
+
     function show() {
         root.opacity = 1
-	}
-	
+    }
+
     function hide() {
         root.opacity = 0
-	}
+    }
+
+    Behavior on opacity {
+        FadeAnimation {}
+    }
 
     TouchBlocker {
         anchors.fill: parent

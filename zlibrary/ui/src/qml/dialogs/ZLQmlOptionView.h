@@ -31,18 +31,7 @@
 #include "../../../../core/src/dialogs/ZLOptionEntry.h"
 
 class ZLQmlDialogContent;
-
-class QLabel;
-class QSpinBox;
-class QCheckBox;
-class QLineEdit;
-class QGroupBox;
-class QRadioButton;
-class QComboBox;
-class QSlider;
-class QWidget;
-class QGridLayout;
-
+  
 class ZLQmlOptionView : public QObject, public ZLOptionView {
 	Q_OBJECT
 	Q_ENUMS(Type)

@@ -200,6 +200,7 @@ Page {
         if (root.isTreeRoot) {
             handler.onFinished.connect(function() {
                 console.log("tree dialog finished")
+                handler = null // hack to keep onStatusChanged from triggering handler.finished() signal
                 popPage()
             })
         }
@@ -215,8 +216,7 @@ Page {
 
     onStatusChanged: {
         if (isTreeRoot && status === PageStatus.Inactive && pageStack.depth === 1){
-            console.log("closing tree dialog")
-            if (handler !== null)
+            if (handler)
                 handler.finish()
         }
     }

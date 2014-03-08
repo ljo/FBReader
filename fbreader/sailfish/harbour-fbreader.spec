@@ -4,7 +4,7 @@
 Summary: E-book reader
 Name: harbour-fbreader
 Version: 0.99.6
-Release: 1
+Release: 2
 License: GPL
 Group: Qt/Qt
 URL: http://www.fbreader.org/
@@ -104,6 +104,9 @@ Provides: libfribidi
 #%postun -p /sbin/ldconfig
 
 %changelog
+* Sat Mar 07 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-2 
+- [SailfishOS] Moving menu to pulldown. Find is now working.
+
 * Thu Jan 23 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-1 
 - new SailfishOS target.
 

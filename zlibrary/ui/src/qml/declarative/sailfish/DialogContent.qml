@@ -39,8 +39,9 @@ Column {
             id: item
             height: child.height
             width: parent.width
-            property Item child: __ensureChild(modelData)
-            function __ensureChild(modelData) {
+            property Item child: createChild(modelData)
+            
+            function createChild(modelData) {
                 if (!child && modelData.imageSource !== undefined)
                     child = imageComponent.createObject(item)
                 else if (!child && modelData.visible)
@@ -66,8 +67,9 @@ Column {
 //			componentName = "DialogBoolean3View.qml"
             break;
         case OptionView.Path:
-            componentName = "DialogPathView.qml"
-            return pathView.createObject(item, { handler: object })
+            // treat as string view
+//            componentName = "DialogPathView.qml"
+            componentName = "DialogStringView.qml"
             break;
         case OptionView.String:
             componentName = "DialogStringView.qml"
@@ -79,8 +81,10 @@ Column {
             componentName = "DialogSpinView.qml"
             break;
         case OptionView.Combo:
-            // TODO: Implement editing of text
-            componentName = "DialogComboView.qml"
+            if (object.editable)
+                componentName = "DialogEditableComboView.qml"
+            else 
+                componentName = "DialogComboView.qml"
             break;
         case OptionView.Color:
             componentName = "DialogColorView.qml"
@@ -111,7 +115,7 @@ Column {
             }
             child = component.createObject(item, { handler: object });
             if (child === null) {
-                console.log("Error creating object", component, componentName);
+                console.log("Error creating object", component, componentName, component.errorString());
             }
         } else {
             console.error("invalid component type: ", object.type)
@@ -128,11 +132,6 @@ Column {
             source: root.imageSource
             smooth: true
         }
-    }
-
-    Component {
-        id: pathView
-        DialogPathView {}
     }
 }
 
