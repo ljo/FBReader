@@ -1,0 +1,3 @@
+TODO
+When downloading book from network library we should see a progressbar.
+Navigating by TOC does not update book view (turning a page back or forth after TOC navigation will get you to the next or previous page of the choosen chapter)
