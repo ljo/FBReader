@@ -57,17 +57,17 @@ Provides: libfribidi
 %defattr(-, root, root, 0644)
 #%defattr(-, root, root, 0755)
 %attr(755, root,root) %{_bindir}/%{name}
-%{_libdir}/libfribidi.a
-%{_libdir}/libfribidi.so
-%{_libdir}/libfribidi.so.0
-%{_libdir}/libfribidi.so.0.3.5
-%{_libdir}/liblinebreak.a
-%{_libdir}/liblinebreak.so
-%{_libdir}/liblinebreak.so.2
-%{_libdir}/liblinebreak.so.2.0.0
+%attr(644, root,root) %{_libdir}/libfribidi.a
+%attr(644, root,root) %{_libdir}/libfribidi.so
+%attr(644, root,root) %{_libdir}/libfribidi.so.0
+%attr(644, root,root) %{_libdir}/libfribidi.so.0.3.5
+%attr(644, root,root) %{_libdir}/liblinebreak.a
+%attr(644, root,root) %{_libdir}/liblinebreak.so
+%attr(644, root,root) %{_libdir}/liblinebreak.so.2
+%attr(644, root,root) %{_libdir}/liblinebreak.so.2.0.0
 
-%{_includedir}/linebreakdef.h
-%{_includedir}/linebreak.h
+%attr(644, root,root) %{_includedir}/linebreakdef.h
+%attr(644, root,root) %{_includedir}/linebreak.h
 %attr(755, root,root) %{_includedir}/fribidi
 %attr(644, root,root) %{_includedir}/fribidi/*
 
@@ -92,6 +92,7 @@ Provides: libfribidi
 %attr(755, root,root) %{_datadir}/zlibrary
 %attr(644, root,root) %{_datadir}/zlibrary/declarative/*
 %attr(644, root,root) %{_datadir}/zlibrary/default/*
+%attr(644, root,root) %{_datadir}/zlibrary/encodings/*
 %attr(644, root,root) %{_datadir}/zlibrary/resources/*
 
 #%{_libdir}/libzlcore.so.%{version}
