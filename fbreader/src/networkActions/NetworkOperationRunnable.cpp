@@ -121,6 +121,12 @@ void DownloadBookRunnable::run() {
 	);
 }
 
+void DownloadBookRunnable::showPercent(int ready, int full) {
+	if (myListener){
+		myListener->bookDownloadingProgress(this, downloaded, size);
+	}
+}
+
 void DownloadBookRunnable::finished(const std::string &error) {
 	myErrorMessage = error;
 	if (!myListener)

@@ -82,6 +82,7 @@ public:
 	void setListener(DownloadBookListener *listener);
 	void run();
 	void finished(const std::string &error = std::string());
+	void showPercent(int ready, int full);
 
 	shared_ptr<BookReference> reference() const;
 	const std::string &fileName() const;
