@@ -21,7 +21,6 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import org.fbreader 0.14
 
-//Dialog {
 Page {
     id: root
     property variant handler
@@ -33,18 +32,12 @@ Page {
         anchors.fill: parent
         contentHeight: contentColumn.height
 
-        Column{
+        Column {
             id: contentColumn
             width: parent.width
 
-    //        DialogHeader {
-    //            id: dialogHeader
-    //            acceptText: ""
-    //            title: dialogContent.content.title
-    //        }
-
             PageHeader {
-                title: dialogContent.content.title
+//                title: dialogContent.content.title // TODO: a title instead of '??????'
             }
 
             Column {
