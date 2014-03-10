@@ -129,9 +129,9 @@ void DownloadBookRunnable::showPercent(int ready, int full) {
 
 void DownloadBookRunnable::finished(const std::string &error) {
 	myErrorMessage = error;
-	if (!myListener)
-		return;
-	myListener->bookDownloaded(this);
+	if (myListener){
+		myListener->bookDownloaded(this);
+	}
 	destroy();
 }
 
