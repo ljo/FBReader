@@ -90,22 +90,15 @@ Page {
                     }
                 }
             }
-        }
-
-        Column {
-            visible: hasProgress
-            anchors.centerIn: parent
-            spacing: Theme.paddingLarge
-            BusyIndicator {
-                id: busyIndicator
-                running: visible
-                anchors.horizontalCenter: parent.horizontalCenter
-                size: BusyIndicatorSize.Large
-            }
-            Label {
-                id: busyLabel
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: Theme.secondaryColor
+            
+            ProgressBar {
+                id: progressBar
+                width: parent.width
+                label: indeterminate ? "" : value + " / " + maximumValue
+                maximumValue: -1
+                indeterminate: maximumValue === -1
+//                valueText: indeterminate ? "" : value + "/" + maximumValue
+                visible: false
             }
         }
     }
@@ -115,22 +108,13 @@ Page {
         onProgressChanged: {
             var value, maximumValue
             console.log("on progress changed", value, maximumValue)
-            if (value >= 0) {
-                if (maximumValue)
-                    busyLabel.text = value + " / " + maximumValue
-                else
-                    busyLabel.text = value
-            }
-            hasProgress = true
+            progressBar.value = value
+            progressBar.maximumValue = maximumValue
+            progressBar.visible = true
         }
         onProgressFinished: {
             var error
-            if (!hasProgress){
-                console.log("onProgressFinished but not hasProgress???")
-                return
-            }
-
-            hasProgress = false
+            progressBar.visible = false
             if (error === "") {
             } else {
                 console.log(error)

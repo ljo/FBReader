@@ -115,16 +115,17 @@ Page {
 
     Connections {
         target: fetchingChildren ? handler : null
-        onProgressChanged: {
-            var value, maximumValue
-            console.log("on progress changed", value, maximumValue)
-            if (value >= 0) {
-                if (maximumValue)
-                    busyLabel.text = value + " / " + maximumValue
-                else
-                    busyLabel.text = value
-            }
-        }
+//  currently no progressChanged signal when fetching children, so this is commented out
+//        onProgressChanged: {
+//            var value, maximumValue
+//            console.log("on progress changed", value, maximumValue)
+//            if (value >= 0) {
+//                if (maximumValue)
+//                    busyLabel.text = value + " / " + maximumValue
+//                else
+//                    busyLabel.text = value
+//            }
+//        }
         onProgressFinished: {
             var error
             if (!modelIndexToFetch || !fetchingChildren){
@@ -199,8 +200,8 @@ Page {
     Component.onCompleted: {
         if (root.isTreeRoot) {
             handler.onFinished.connect(function() {
-                console.log("tree dialog finished")
-                handler = null // hack to keep onStatusChanged from triggering handler.finished() signal
+                console.log("got tree dialog finished signal. closing tree dialog")
+                handler = null // stop onStatusChanged triggering handler.finished() signal
                 popPage()
             })
         }

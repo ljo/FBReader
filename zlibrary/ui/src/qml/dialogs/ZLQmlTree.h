@@ -74,7 +74,7 @@ public Q_SLOTS:
 	
 Q_SIGNALS:
 	void finished();
-    void progressChanged(int value, int maxValue);
+    void progressChanged(int value, int maximumValue);
     void progressFinished(QString error);
 	
 private:

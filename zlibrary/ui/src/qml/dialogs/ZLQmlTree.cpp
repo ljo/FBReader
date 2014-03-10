@@ -171,8 +171,6 @@ void ZLQmlTreeDialog::fetchChildren(const QModelIndex &index) {
 		shared_ptr<ZLExecutionData::Listener> listener = new ZLQmlActionListener(node, this);
 		myListeners.insert(node, listener);
 		node->requestChildren(listener);
-		ZLQmlActionListener *qmllistener = static_cast<ZLQmlActionListener*>(&*listener);
-		emit progressChanged(qmllistener->value(), qmllistener->maximumValue());
 	}
 }
 
@@ -246,9 +244,7 @@ void ZLQmlTreeDialog::onProgressUpdated(ZLTreeNode *node, int ready, int full) {
 }
 
 void ZLQmlTreeDialog::onProgressFinished(ZLTreeNode *node, const std::string &error) {
-//	Q_UNUSED(error);
 	if (myListeners.remove(node) > 0){
-		emit progressChanged(0, 0);
 		emit progressFinished(QString::fromStdString(error));
 	}
 }
@@ -262,8 +258,6 @@ void ZLQmlTreeDialog::run(const QModelIndex &index, int action) {
 		myListeners.insert(node, listener);
 		runnable->setListener(listener);
 		ZLTimeManager::Instance().addAutoRemovableTask(new ZLQmlRunnableHelper(runnable));
-		ZLQmlActionListener *qmllistener = static_cast<ZLQmlActionListener*>(&*listener);
-		emit progressChanged(qmllistener->value(), qmllistener->maximumValue());
 	}
 }
 
