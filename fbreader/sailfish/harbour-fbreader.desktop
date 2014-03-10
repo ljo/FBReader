@@ -6,4 +6,4 @@ Name=FBReader
 Comment=E-Book Reader
 Exec=harbour-fbreader
 Icon=harbour-fbreader
-X-Nemo-Application-Type=silica-qt5
+#X-Nemo-Application-Type=silica-qt5
