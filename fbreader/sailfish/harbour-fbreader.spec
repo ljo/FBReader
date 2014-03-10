@@ -4,7 +4,7 @@
 Summary: E-book reader
 Name: harbour-fbreader
 Version: 0.99.6
-Release: 2
+Release: 3
 License: GPL
 Group: Qt/Qt
 URL: http://www.fbreader.org/
@@ -94,6 +94,10 @@ Provides: libfribidi
 %attr(644, root,root) %{_datadir}/zlibrary/default/*
 %attr(644, root,root) %{_datadir}/zlibrary/encodings/*
 %attr(644, root,root) %{_datadir}/zlibrary/resources/*
+%attr(644, root,root) %{_datadir}/zlibrary/hyphenationPatterns.zip
+%attr(644, root,root) %{_datadir}/zlibrary/keynames.xml
+%attr(644, root,root) %{_datadir}/zlibrary/languagePatterns.zip
+%attr(644, root,root) %{_datadir}/zlibrary/unicode.xml.gz
 
 #%{_libdir}/libzlcore.so.%{version}
 #%{_libdir}/libzltext.so.%{version}
@@ -105,7 +109,10 @@ Provides: libfribidi
 #%postun -p /sbin/ldconfig
 
 %changelog
-* Sat Mar 07 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-2 
+* Sun Mar 09 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-3 
+- [SailfishOS] Navigating via TOC does not require an extra page move.
+
+* Sat Mar 08 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-2 
 - [SailfishOS] Moving menu to pulldown. Find is now working.
 
 * Thu Jan 23 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-1 

@@ -1,3 +1,10 @@
-TODO
-When downloading book from network library we should see a progressbar.
-Navigating by TOC does not update book view (turning a page back or forth after TOC navigation will get you to the next or previous page of the choosen chapter)
+As for TODO file, we never delete items from this file, we just
+replace a bullet (*) with DONE word. We also add a comments into
+this file; comment are marked with double bullet (**).
+
+* When downloading book from the network library we should see a progressbar.
+DONE Navigating by TOC does not update book view (turning a page back or forth after TOC navigation will get you to the next or previous page of the choosen chapter)
+* Decide wether to enable "add book" to choose explicit book or just rely on import from known/given directories.
+* Make booster work on main.
+* Strip liblinebreak.
+* Decide wether to move zlibrary under /usr/share/harbour-fbreader/lib/.
