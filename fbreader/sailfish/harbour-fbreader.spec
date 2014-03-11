@@ -4,7 +4,7 @@
 Summary: E-book reader
 Name: harbour-fbreader
 Version: 0.99.6
-Release: 3
+Release: 4
 License: GPL
 Group: Qt/Qt
 URL: http://www.fbreader.org/
@@ -109,6 +109,9 @@ Provides: libfribidi
 #%postun -p /sbin/ldconfig
 
 %changelog
+* Tue Mar 11 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-4 
+- [SailfishOS] A Progressbar is now showing when downloading from NetworkLibrary. Page title for book page in library is not ?????? anymore. 
+
 * Sun Mar 09 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-3 
 - [SailfishOS] Navigating via TOC does not require an extra page move.
 
