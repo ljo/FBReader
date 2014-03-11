@@ -63,7 +63,7 @@ Page {
                     content: root.handler.createPageContent(root.modelIndex)
                 }
 
-                Column{
+                Column {
                     id: buttons
                     width: parent.width
                     Repeater {
@@ -74,12 +74,17 @@ Page {
                             text: modelData
                             onClicked: {
                                 root.handler.run(root.modelIndex, index)
+                                recheckActions()
                             }
                             visible: root.handler.isVisibleAction(root.modelIndex, index)
                         }
                     }
+                    
                     Component.onCompleted: {
-        //                dialogHeader.acceptText = repeater.itemAt(0).text
+                    }
+                    
+                    function recheckActions(){
+                        repeater.model = root.handler.actions(root.modelIndex)
                     }
                 }
             }
@@ -112,6 +117,8 @@ Page {
             } else {
                 console.log(error)
             }
+            
+            buttons.recheckActions()
         }
     }
 
