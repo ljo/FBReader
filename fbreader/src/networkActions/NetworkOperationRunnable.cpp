@@ -123,7 +123,7 @@ void DownloadBookRunnable::run() {
 
 void DownloadBookRunnable::showPercent(int ready, int full) {
 	if (myListener){
-		myListener->bookDownloadingProgress(this, downloaded, size);
+		myListener->bookDownloadingProgress(this, ready, full);
 	}
 }
 
