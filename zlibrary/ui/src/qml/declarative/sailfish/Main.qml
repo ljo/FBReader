@@ -46,8 +46,24 @@ ApplicationWindow {
 
         onQuestionDialogRequested: {
             console.log("onQuestionDialogRequested", object)
-            //var component = Qt.createComponent("QuestionDialog.qml");
-            root.openDialog(questionDialog.createObject(root, { handler: object }));
+            pushWhenPageStackNotBusy("QuestionDialog.qml", { handler: object }, PageStackAction.Immediate)
+        }
+        
+        // following is a special case of QuestionDialog
+        onYesNoDialogRequested: {
+            var object
+            console.log("onYesNoDialogRequested", object) // object is actually a ZLQmlQuestionDialog
+            var args = {
+                title: object.title,
+                text: object.text,
+                acceptText: object.buttons[0],
+                rejectText: object.buttons[1]
+            }
+            var dialog = pageStack.push("YesNoDialog.qml", args)
+            dialog.done.connect(function() {
+                console.log("result", dialog.result == DialogResult.Accepted ? 0 : 1)
+                object.press(dialog.result == DialogResult.Accepted ? 0 : 1) // 0 = yes, 1 = no/cancel
+            })
         }
 
         onInformationBoxRequested: {

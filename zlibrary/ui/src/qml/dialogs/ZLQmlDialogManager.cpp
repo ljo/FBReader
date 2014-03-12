@@ -110,6 +110,11 @@ void ZLQmlDialogManager::errorBox(const ZLResourceKey &key, const std::string &m
 int ZLQmlDialogManager::questionBox(const ZLResourceKey &key, const std::string &message, const ZLResourceKey &button0, const ZLResourceKey &button1, const ZLResourceKey &button2) const {
 	ZLQmlQuestionDialog *dialog = new ZLQmlQuestionDialog(QString::fromStdString(dialogTitle(key)), QString::fromStdString(message),
 	                                                      ::qtButtonName(button0), ::qtButtonName(button1), ::qtButtonName(button2));
+#if SAILFISH
+	if (button2.Name.empty() && (&button1 == &ZLDialogManager::CANCEL_BUTTON || &button1 == &ZLDialogManager::NO_BUTTON)) {
+		emit const_cast<ZLQmlDialogManager*>(this)->yesNoDialogRequested(dialog);
+	} else
+#endif
 	emit const_cast<ZLQmlDialogManager*>(this)->questionDialogRequested(dialog);
 	int result = dialog->run();
 	qDebug() << Q_FUNC_INFO << result;
