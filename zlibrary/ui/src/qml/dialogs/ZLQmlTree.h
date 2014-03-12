@@ -60,6 +60,7 @@ public:
 	Q_INVOKABLE QObject *createPageContent(const QModelIndex &index);
 	Q_INVOKABLE void run(const QModelIndex &index, int action);
 	Q_INVOKABLE void finish();
+	Q_INVOKABLE bool hasOngoingAction(const QModelIndex &index);
 	
 	virtual void onNodeBeginInsert(ZLTreeNode *parent, size_t index);
 	virtual void onNodeEndInsert();

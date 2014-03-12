@@ -217,6 +217,11 @@ bool ZLQmlTreeDialog::isVisibleAction(const QModelIndex &index, int action) {
 	return actions.at(action)->makesSense();
 }
 
+bool ZLQmlTreeDialog::hasOngoingAction(const QModelIndex &index) {
+	ZLTreeNode *node = treeNode(index);
+	return myListeners.contains(node);
+}
+
 QObject *ZLQmlTreeDialog::createPageContent(const QModelIndex &index) {
 	if (ZLTreePageNode *pageNode = zlobject_cast<ZLTreePageNode*>(treeNode(index))) {
 		shared_ptr<ZLDialogContent> content = pageNode->content();

@@ -74,17 +74,25 @@ Page {
                             text: modelData
                             onClicked: {
                                 root.handler.run(root.modelIndex, index)
-                                recheckActions()
+                                buttons.recheckActions()
                             }
-                            visible: root.handler.isVisibleAction(root.modelIndex, index)
+                            Component.onCompleted: {
+                                console.log("button completed", index, modelData, root.handler.isVisibleAction(root.modelIndex, index))
+                            }
                         }
                     }
                     
                     Component.onCompleted: {
+                        recheckActions()
                     }
                     
-                    function recheckActions(){
-                        repeater.model = root.handler.actions(root.modelIndex)
+                    function recheckActions() {
+                        var hasOngoingAction = root.handler.hasOngoingAction(root.modelIndex)
+                        for (var i=0; i < repeater.count; i++) {
+                            var button = repeater.itemAt(i)
+                            button.visible = root.handler.isVisibleAction(root.modelIndex, i)
+                            button.enabled = !hasOngoingAction
+                        }
                     }
                 }
             }
@@ -92,11 +100,11 @@ Page {
             ProgressBar {
                 id: progressBar
                 width: parent.width
-                label: indeterminate ? "" : value + " / " + maximumValue
-                maximumValue: -1
-                indeterminate: maximumValue === -1
+                label: indeterminate ? "" : value + "%"
+                maximumValue: 100
+                indeterminate: true
 //                valueText: indeterminate ? "" : value + "/" + maximumValue
-                visible: false
+                visible: root.handler.hasOngoingAction(root.modelIndex)
             }
         }
     }
@@ -105,19 +113,20 @@ Page {
         target: handler
         onProgressChanged: {
             var value, maximumValue
-            console.log("on progress changed", value, maximumValue)
-            progressBar.value = value
-            progressBar.maximumValue = maximumValue
-            progressBar.visible = true
+//            console.log("on progress changed", value, maximumValue)
+            // only show progressbar if this book node has ongoing action
+            // this signal is recieved regardless of the source node
+            if (root.handler.hasOngoingAction(root.modelIndex)){
+                progressBar.indeterminate = maximumValue === -1
+                progressBar.value = Math.round(100 * value / maximumValue)
+                progressBar.visible = true
+            }
         }
         onProgressFinished: {
             var error
+            if (error !== "") console.log("progress finished with error:", error)
+            console.assert(!root.handler.hasOngoingAction(root.modelIndex))
             progressBar.visible = false
-            if (error === "") {
-            } else {
-                console.log(error)
-            }
-            
             buttons.recheckActions()
         }
     }
