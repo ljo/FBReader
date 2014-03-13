@@ -384,7 +384,7 @@ const char *platformIcons[][2] = {
 	{ "preferences", "" },
 	{ "redo", "forward" },
 	{ "rotate", "" },
-	{ "search", "" },
+	{ "search", "search" },
 	{ "showHelp", "" },
 	{ "library", "" },
 	{ "networkLibrary", "" },
