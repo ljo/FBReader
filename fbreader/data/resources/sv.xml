@@ -112,7 +112,7 @@
 			<node name="toggleFullscreen" value="Helskärm" />
 			<node name="toggleIndicator" value="Växla indikator" />
 		</node>
-		<node name="preferences" toBeTranslated="true" value="Last Preferences Dialog..." />
+		<node name="preferences" value="Inställningar" />
 		<node name="quit" value="Stäng" />
 	</node>
 	<node name="toolbar">
@@ -198,19 +198,19 @@
 			<node name="tooltip" toBeTranslated="true" value="Filter" />
 		</node>
 		<node name="preferences">
-			<node name="label" toBeTranslated="true" value="Last Preferences Dialog" />
-			<node name="tooltip" toBeTranslated="true" value="Show Last Opened Preferences Dialog" />
+			<node name="label" value="Inställningar" />
+			<node name="tooltip" value="Visa senaste öppnade inställningar" />
 		</node>
 		<node name="bookInfo">
 			<node name="label" toBeTranslated="true" value="Book Info" />
 			<node name="tooltip" value="Visa bokinformation" />
 		</node>
 		<node name="libraryOptions">
-			<node name="label" toBeTranslated="true" value="Library Preferences" />
+			<node name="label" value="Biblioteksinställningar" />
 			<node name="tooltip" toBeTranslated="true"  value="Show Library Preferences Dialog" />
 		</node>
 		<node name="networkOptions">
-			<node name="label" toBeTranslated="true" value="Network Preferences" />
+			<node name="label" value="Nätbiblioteksinställningar" />
 			<node name="tooltip" toBeTranslated="true" value="Show Network Preferences Dialog" />
 		</node>
 		<node name="systemOptions">
@@ -238,7 +238,7 @@
 			<node name="buyAndDownload" toBeTranslated="true" value="Buy and &amp;download" />
 		</node>
 		<node name="LibraryOptionsDialog">
-			<node name="title" toBeTranslated="true" value="FBReader - Library Options" />
+			<node name="title" value="FBReader – Biblioteksinställningar" />
 			<node name="tab">
 				<node name="Library" value="Bibliotek">
 					<node name="bookPath" value="Boksökväg" />
