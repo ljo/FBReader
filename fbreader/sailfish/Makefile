@@ -15,18 +15,19 @@ KEYMAP_FILE = "keymap.sailfish.xml"
 LIBFRIBIDI = fribidi-0.19.6
 LIBLINEBREAK = liblinebreak-2.0
 make_libfribidi:
-	cd ../../libs/sailfish/$(LIBFRIBIDI) && make distclean && ./configure --enable-static && make && make install prefix=/ DESTDIR=$(ROOTDIR)/libs/sailfish/$(UNAME_MACHINE)/ && cd $(CURDIR)
+	cd ../../libs/sailfish/$(LIBFRIBIDI) && make distclean && ./configure --enable-static && make && make install-strip prefix=/ DESTDIR=$(ROOTDIR)/libs/sailfish/$(UNAME_MACHINE)/ && cd $(CURDIR)
 
 make_liblinebreak:
-	cd ../../libs/sailfish/$(LIBLINEBREAK) && make distclean && ./configure --enable-static && make && make install prefix=/ DESTDIR=$(ROOTDIR)/libs/sailfish/$(UNAME_MACHINE)/ && cd $(CURDIR)
+	cd ../../libs/sailfish/$(LIBLINEBREAK) && make distclean && ./configure --enable-static && make && make install-strip prefix=/ DESTDIR=$(ROOTDIR)/libs/sailfish/$(UNAME_MACHINE)/ && cd $(CURDIR)
 
 make_libs: make_libfribidi make_liblinebreak
 
 install_libs:
 	@install -d $(DESTDIR)/usr
 	cp -a ../../libs/sailfish/$(UNAME_MACHINE)/* $(DESTDIR)/usr/
-#	@make -C ../../libs/sailfish/$(LIBFRIBIDI) install prefix=/usr DESTDIR=$(DESTDIR)
-#	@make -C ../../libs/sailfish/$(LIBLINEBREAK) install prefix=/usr DESTDIR=$(DESTDIR)
+#	@make -C ../../libs/sailfish/$(LIBFRIBIDI) install-strip prefix=/usr DESTDIR=$(DESTDIR)
+#	@make -C ../../libs/sailfish/$(LIBLINEBREAK) install-strip prefix=/usr DESTDIR=$(DESTDIR)
+#	@libtool --finish $(DESTDIR)/usr/local/lib
 
 install: install_libs
 	@install -m 0644 ../data/default/$(KEYMAP_FILE) $(DESTDIR)$(SHAREDIR)/$(FBREADER_NAME)/default/keymap.xml
