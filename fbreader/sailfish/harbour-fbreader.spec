@@ -114,7 +114,8 @@ Direct reading from zip, tar, gzip and bzip2 archives is also supported.
 
 %changelog
 * Fri Mar 14 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-5 
-- [SailfishOS] Find in book toolbar overlay now have search icon placed inbetween previous and next to make it symmetric around centerline So in worst case you just bring up the search dialog. Progressbar when downloading from NetworkLibrary shows percent instead of bytes. Adding some dialogs not used yet. 
+- [SailfishOS] Find-in-book toolbar overlay now have search icon placed inbetween previous and next to make it symmetric around centerline. So in worst case you just bring up the search dialog. Progressbar when downloading from NetworkLibrary shows percent instead of bytes. Adding some dialogs not used yet. 
+
 * Tue Mar 11 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-4 
 - [SailfishOS] A Progressbar is now showing when downloading from NetworkLibrary. Page title for book page in library is not ?????? anymore. 
 
@@ -122,7 +123,7 @@ Direct reading from zip, tar, gzip and bzip2 archives is also supported.
 - [SailfishOS] Navigating via TOC does not require an extra page move.
 
 * Sat Mar 08 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-2 
-- [SailfishOS] Moving menu to pulldown. Find is now working.
+- [SailfishOS] Moving menu to pulldown. Find-in-book is now working.
 
 * Thu Jan 23 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-1 
 - new SailfishOS target.
