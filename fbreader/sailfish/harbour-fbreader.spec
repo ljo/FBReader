@@ -1,10 +1,9 @@
 # Upstream: Nikolay Pultsin <geometer@fbreader.org>
 
-
 Summary: E-book reader
 Name: harbour-fbreader
 Version: 0.99.6
-Release: 4
+Release: 5
 License: GPL
 Group: Qt/Qt
 URL: http://www.fbreader.org/
@@ -17,9 +16,16 @@ Packager: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>
 #Source: http://www.fbreader.org/fbreader-sources-%{version}.tgz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
+# >> macros
+%define __provides_exclude_from ^%{_datadir}/.*$
+%define __provides_exclude_from ^%{_libdir}/.*$
+%define __requires_exclude ^liblinebreak|liblinebreak.*|libfribidi|libfribidi.*$
+# << macros
+
+
 Requires: sailfishsilica-qt5 >= 0.10.9 
 BuildRequires: pkgconfig(Qt5Core) pkgconfig(Qt5Quick) pkgconfig(Qt5Qml) pkgconfig(Qt5Gui) pkgconfig(Qt5Network)
-#, libpng-devel
+
 BuildRequires: zlib-devel 
 BuildRequires: desktop-file-utils
 BuildRequires: bzip2-devel, expat-devel, sqlite-devel, libcurl-devel
@@ -45,14 +51,12 @@ Direct reading from zip, tar, gzip and bzip2 archives is also supported.
 %{__rm} -rf $RPM_BUILD_ROOT
 %makeinstall INSTALL_ROOT=$RPM_BUILD_ROOT INSTALLDIR=%{_prefix} DESTDIR=$RPM_BUILD_ROOT UNAME_MACHINE=armv7hl
 
-# %{buildroot} -> $RPM_BUILD_ROOT
 %clean
 %{__rm} -rf $RPM_BUILD_ROOT
 
-Privides: liblinebreak
-Provides: libfribidi
+#Provides: liblinebreak
+#Provides: libfribidi
 
-# FBReader -> %{name}
 %files
 %defattr(-, root, root, 0644)
 #%defattr(-, root, root, 0755)
@@ -109,6 +113,8 @@ Provides: libfribidi
 #%postun -p /sbin/ldconfig
 
 %changelog
+* Fri Mar 14 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-5 
+- [SailfishOS] Find in book toolbar overlay now have search icon placed inbetween previous and next to make it symmetric around centerline So in worst case you just bring up the search dialog. Progressbar when downloading from NetworkLibrary shows percent instead of bytes. Adding some dialogs not used yet. 
 * Tue Mar 11 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-4 
 - [SailfishOS] A Progressbar is now showing when downloading from NetworkLibrary. Page title for book page in library is not ?????? anymore. 
 
@@ -120,7 +126,3 @@ Provides: libfribidi
 
 * Thu Jan 23 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-1 
 - new SailfishOS target.
-
-* Sun Nov 18 2007 Nikolay Pultsin <geometer@fbreader.org> - 0.8.8-1
-- new upstream version
-- excluded keynames.patch
