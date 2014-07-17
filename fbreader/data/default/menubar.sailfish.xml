@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menubar>
-	<item id="networkLibrary"/>
+<!--	<item id="networkLibrary"/>
 	<item id="library"/>
-	<item id="search"/>
+	<item id="search"/> -->
 	<!--item id="addBook"/-->
-	<item id="toc"/>
+<!--	<item id="toc"/>
 	<item id="night"/>
 	<item id="day"/>
 	<item id="preferences"/>
+	<item id="bookInfo"/> -->
+	<item id="preferences"/>
 	<item id="bookInfo"/>
+	<item id="networkLibrary"/>
+	<item id="library"/>
+	<item id="search"/>
+	<item id="toc"/>
+	<item id="night"/>
+	<item id="day"/>
 </menubar>

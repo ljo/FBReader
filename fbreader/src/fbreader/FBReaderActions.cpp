@@ -98,7 +98,9 @@ void ShowLibraryTreeAction::run() {
 	dialog->rootNode().insert(new TagTreeNode, index++);
         dialog->rootNode().insert(new TitleTreeNode, index++);
 	dialog->rootNode().insert(new RecentBooksTreeNode, index++);
+#ifndef SAILFISH // fixme! - think about enable it on sailfish (without QWidgets)
 	dialog->rootNode().insert(new OpenFileSystemNode, index++);
+#endif
 	dialog->run();
 }
 

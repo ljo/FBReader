@@ -3,7 +3,7 @@
 Summary: E-book reader
 Name: harbour-fbreader
 Version: 0.99.6
-Release: 5
+Release: 6
 License: GPL
 Group: Qt/Qt
 URL: http://www.fbreader.org/
@@ -22,6 +22,8 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 %define __requires_exclude ^liblinebreak|liblinebreak.*|libfribidi|libfribidi.*$
 # << macros
 
+# Check out using
+#%ghost
 
 Requires: sailfishsilica-qt5 >= 0.10.9 
 BuildRequires: pkgconfig(Qt5Core) pkgconfig(Qt5Quick) pkgconfig(Qt5Qml) pkgconfig(Qt5Gui) pkgconfig(Qt5Network)
@@ -113,9 +115,10 @@ Direct reading from zip, tar, gzip and bzip2 archives is also supported.
 #%postun -p /sbin/ldconfig
 
 %changelog
+* Wed Jul 16 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-6 
+- [SailfishOS] Changed icon to one contributed by caprico, thanks. Changed order of items in menu. 
 * Fri Mar 14 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-5 
 - [SailfishOS] Find-in-book toolbar overlay now have search icon placed inbetween previous and next to make it symmetric around centerline. So in worst case you just bring up the search dialog. Progressbar when downloading from NetworkLibrary shows percent instead of bytes. Adding some dialogs not used yet. 
-
 * Tue Mar 11 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-4 
 - [SailfishOS] A Progressbar is now showing when downloading from NetworkLibrary. Page title for book page in library is not ?????? anymore. 
 
