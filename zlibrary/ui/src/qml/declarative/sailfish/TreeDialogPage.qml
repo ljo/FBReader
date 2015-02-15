@@ -1,4 +1,4 @@
-    /*
+/*
  * Copyright (C) 2004-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -127,7 +127,7 @@ Page {
 //            }
 //        }
         onProgressFinished: {
-            var error
+            var error = ""
             if (!modelIndexToFetch || !fetchingChildren){
                 console.log("onProgressFinished but not fetching children???")
                 return

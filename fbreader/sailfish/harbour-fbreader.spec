@@ -3,7 +3,7 @@
 Summary: E-book reader
 Name: harbour-fbreader
 Version: 0.99.6
-Release: 6
+Release: 7
 License: GPL
 Group: Qt/Qt
 URL: http://www.fbreader.org/
@@ -115,6 +115,8 @@ Direct reading from zip, tar, gzip and bzip2 archives is also supported.
 #%postun -p /sbin/ldconfig
 
 %changelog
+* Thu Oct 30 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-7 
+- [SailfishOS] Fix qt5.2 issue. Only use this update if on update9 Uitukka or newer. 
 * Wed Jul 16 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-6 
 - [SailfishOS] Changed icon to one contributed by caprico, thanks. Changed order of items in menu. 
 * Fri Mar 14 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-5 
