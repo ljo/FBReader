@@ -51,7 +51,7 @@ Direct reading from zip, tar, gzip and bzip2 archives is also supported.
 # %{buildroot} -> $RPM_BUILD_ROOT
 %install
 %{__rm} -rf $RPM_BUILD_ROOT
-%makeinstall INSTALL_ROOT=$RPM_BUILD_ROOT INSTALLDIR=%{_prefix} DESTDIR=$RPM_BUILD_ROOT UNAME_MACHINE=armv7hl
+%makeinstall INSTALL_ROOT=$RPM_BUILD_ROOT INSTALLDIR=%{_prefix} DESTDIR=$RPM_BUILD_ROOT UNAME_MACHINE=armv7hl TARGET_ARCH=sailfish UI_TYPE=qml TARGET_STATUS=release
 
 %clean
 %{__rm} -rf $RPM_BUILD_ROOT

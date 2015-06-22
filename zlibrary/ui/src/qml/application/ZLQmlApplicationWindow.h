@@ -32,7 +32,7 @@
   #include <QDeclarativeListProperty>
 #endif
 
-#ifdef MEEGO_EDITION
+#if defined(MEEGO_EDITION) || defined(SAILFISH)
 #include <policy/resource-set.h>
 #endif
 
@@ -113,7 +113,7 @@ private:
 	QObjectList myActions;
 	QHash<const ZLToolbar::Item*, ZLQmlToolBarItem*> myActionsHash;
 	ZLQmlMenuBar *myMenu;
-#ifdef MEEGO_EDITION
+#if defined(MEEGO_EDITION) || defined(SAILFISH)
 	ResourcePolicy::ResourceSet *myResourceSet;
 #endif
 	bool myFullScreen;

@@ -45,6 +45,8 @@
 #include "../dialogs/ZLQmlTree.h"
 #include "../view/ZLQmlViewWidget.h"
 
+#include "../../../fbreader/src/fbreader/FBReader.h"
+
 void ZLQmlDialogManager::createApplicationWindow(ZLApplication *application) const {
 	new ZLQmlApplicationWindow(application);
 }
@@ -58,10 +60,13 @@ void ZLQmlApplicationWindow::setToggleButtonState(const ZLToolbar::ToggleButtonI
 ZLQmlApplicationWindow::ZLQmlApplicationWindow(ZLApplication *application) :
 	ZLApplicationWindow(application), myFullScreen(false) {
 	myMenu = new ZLQmlMenuBar(this);
-#ifdef MEEGO_EDITION
+#if defined(MEEGO_EDITION) || defined(SAILFISH)
+	FBReader &fbreader = FBReader::Instance();
 	myResourceSet = new ResourcePolicy::ResourceSet(QLatin1String("player"), this);
 	myResourceSet->addResourceObject(new ResourcePolicy::ScaleButtonResource);
-	myResourceSet->acquire();
+	if ( fbreader.EnableTapScrollingByVolumeKeysOption.value() ) {
+		myResourceSet->acquire();
+	}
 	qApp->installEventFilter(this);
 #endif
 }
@@ -196,11 +201,14 @@ void ZLQmlMenuBar::Builder::processSepartor(ZLMenubar::Separator &separator) {
 }
 
 bool ZLQmlApplicationWindow::eventFilter(QObject *obj, QEvent *event) {
-#ifdef MEEGO_EDITION
-	if (event->type() == QEvent::ApplicationActivate)
-		myResourceSet->acquire();
-	else if (event->type() == QEvent::ApplicationDeactivate)
-		myResourceSet->release();
+#if defined(MEEGO_EDITION) || defined(SAILFISH)
+	FBReader &fbreader = FBReader::Instance();
+	if ( fbreader.EnableTapScrollingByVolumeKeysOption.value() ) {
+		if (event->type() == QEvent::ApplicationActivate)
+			myResourceSet->acquire();
+		else if (event->type() == QEvent::ApplicationDeactivate)
+			myResourceSet->release();
+	}
 #endif
 	return QObject::eventFilter(obj, event);
 }
