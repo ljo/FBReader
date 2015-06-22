@@ -31,6 +31,7 @@ BuildRequires: pkgconfig(Qt5Core) pkgconfig(Qt5Quick) pkgconfig(Qt5Qml) pkgconfi
 BuildRequires: zlib-devel 
 BuildRequires: desktop-file-utils
 BuildRequires: bzip2-devel, expat-devel, sqlite-devel, libcurl-devel
+BuildRequires: libresourceqt-qt5-devel
 
 %description
 FBReader is an e-book reader.
@@ -51,7 +52,7 @@ Direct reading from zip, tar, gzip and bzip2 archives is also supported.
 # %{buildroot} -> $RPM_BUILD_ROOT
 %install
 %{__rm} -rf $RPM_BUILD_ROOT
-%makeinstall INSTALL_ROOT=$RPM_BUILD_ROOT INSTALLDIR=%{_prefix} DESTDIR=$RPM_BUILD_ROOT UNAME_MACHINE=armv7hl
+%makeinstall INSTALL_ROOT=$RPM_BUILD_ROOT INSTALLDIR=%{_prefix} DESTDIR=$RPM_BUILD_ROOT UNAME_MACHINE=armv7hl TARGET_ARCH=sailfish UI_TYPE=qml TARGET_STATUS=release
 
 %clean
 %{__rm} -rf $RPM_BUILD_ROOT
