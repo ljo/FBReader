@@ -31,6 +31,7 @@ BuildRequires: pkgconfig(Qt5Core) pkgconfig(Qt5Quick) pkgconfig(Qt5Qml) pkgconfi
 BuildRequires: zlib-devel 
 BuildRequires: desktop-file-utils
 BuildRequires: bzip2-devel, expat-devel, sqlite-devel, libcurl-devel
+BuildRequires: libresourceqt-qt5-devel
 
 %description
 FBReader is an e-book reader.
