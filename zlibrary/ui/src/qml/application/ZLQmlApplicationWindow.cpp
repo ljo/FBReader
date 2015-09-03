@@ -64,8 +64,8 @@ ZLQmlApplicationWindow::ZLQmlApplicationWindow(ZLApplication *application) :
 	FBReader &fbreader = FBReader::Instance();
 	myResourceSet = new ResourcePolicy::ResourceSet(QLatin1String("player"), this);
 	myResourceSet->addResourceObject(new ResourcePolicy::ScaleButtonResource);
-	if ( fbreader.EnableTapScrollingByVolumeKeysOption.value() ) {
-		myResourceSet->acquire();
+	if (fbreader.EnableTapScrollingByVolumeKeysOption.value()) {
+	  myResourceSet->acquire();
 	}
 	qApp->installEventFilter(this);
 #endif
@@ -202,13 +202,13 @@ void ZLQmlMenuBar::Builder::processSepartor(ZLMenubar::Separator &separator) {
 
 bool ZLQmlApplicationWindow::eventFilter(QObject *obj, QEvent *event) {
 #if defined(MEEGO_EDITION) || defined(SAILFISH)
-	FBReader &fbreader = FBReader::Instance();
-	if ( fbreader.EnableTapScrollingByVolumeKeysOption.value() ) {
-		if (event->type() == QEvent::ApplicationActivate)
-			myResourceSet->acquire();
-		else if (event->type() == QEvent::ApplicationDeactivate)
-			myResourceSet->release();
-	}
+  FBReader &fbreader = FBReader::Instance();
+  if (fbreader.EnableTapScrollingByVolumeKeysOption.value()) {
+    if (event->type() == QEvent::ApplicationActivate)
+      myResourceSet->acquire();
+    else if (event->type() == QEvent::ApplicationDeactivate)
+      myResourceSet->release();
+  }
 #endif
 	return QObject::eventFilter(obj, event);
 }

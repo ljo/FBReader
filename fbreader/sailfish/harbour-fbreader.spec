@@ -3,7 +3,7 @@
 Summary: E-book reader
 Name: harbour-fbreader
 Version: 0.99.6
-Release: 7
+Release: 8
 License: GPL
 Group: Qt/Qt
 URL: http://www.fbreader.org/
@@ -52,7 +52,7 @@ Direct reading from zip, tar, gzip and bzip2 archives is also supported.
 # %{buildroot} -> $RPM_BUILD_ROOT
 %install
 %{__rm} -rf $RPM_BUILD_ROOT
-%makeinstall INSTALL_ROOT=$RPM_BUILD_ROOT INSTALLDIR=%{_prefix} DESTDIR=$RPM_BUILD_ROOT UNAME_MACHINE=armv7hl TARGET_ARCH=sailfish UI_TYPE=qml TARGET_STATUS=release
+%makeinstall INSTALL_ROOT=$RPM_BUILD_ROOT INSTALLDIR=%{_prefix} TARGET_ARCH=sailfish UI_TYPE=qml TARGET_STATUS=release DESTDIR=$RPM_BUILD_ROOT UNAME_MACHINE=armv7hl
 
 %clean
 %{__rm} -rf $RPM_BUILD_ROOT
@@ -116,6 +116,8 @@ Direct reading from zip, tar, gzip and bzip2 archives is also supported.
 #%postun -p /sbin/ldconfig
 
 %changelog
+* Mon Jun 22 2015 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-8 
+- [SailfishOS] Volume key page navigation now works. Thanks to George Nikandrov (gnikandrov) for providing the patch. 
 * Thu Oct 30 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-7 
 - [SailfishOS] Fix qt5.2 issue. Only use this update if on update9 Uitukka or newer. 
 * Wed Jul 16 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-6 
