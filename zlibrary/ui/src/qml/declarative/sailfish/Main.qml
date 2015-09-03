@@ -4,6 +4,8 @@ import Sailfish.Silica 1.0
 ApplicationWindow {
     id: root
 
+    allowedOrientations: Orientation.All
+
     initialPage: Component { MainPage { } }
 
     cover: CoverBackground {
@@ -48,7 +50,7 @@ ApplicationWindow {
             console.log("onQuestionDialogRequested", object)
             pushWhenPageStackNotBusy("QuestionDialog.qml", { handler: object }, PageStackAction.Immediate)
         }
-        
+
         // following is a special case of QuestionDialog
         onYesNoDialogRequested: {
             var object

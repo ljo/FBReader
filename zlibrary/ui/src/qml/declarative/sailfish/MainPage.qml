@@ -5,6 +5,8 @@ import org.fbreader 0.14
 Page {
     id: root
 
+    allowedOrientations: Orientation.All
+
     SilicaFlickable {
         id: flickable
         anchors.fill: parent

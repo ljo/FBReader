@@ -23,12 +23,15 @@ import org.fbreader 0.14
 
 Page {
     id: root
+
+    allowedOrientations: Orientation.All
+
     property variant handler
     property variant rootIndex
     property bool isTreeRoot: true
     property Item contextMenu
     property bool fetchingChildren: false
-
+    
     VisualDataModel {
         id: visualModel
         model: root.handler

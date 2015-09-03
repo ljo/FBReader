@@ -3,6 +3,9 @@ import Sailfish.Silica 1.0
 
 Dialog {
     id: dialog
+
+    allowedOrientations: Orientation.All
+
     property string title
     property string text
     property string acceptText

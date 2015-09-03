@@ -22,6 +22,9 @@ import Sailfish.Silica 1.0
 
 Dialog {
     id: root
+
+    allowedOrientations: Orientation.All
+
     property variant handler
     canAccept: handler.acceptButtons.length > 0
 

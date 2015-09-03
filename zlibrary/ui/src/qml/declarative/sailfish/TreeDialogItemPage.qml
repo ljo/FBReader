@@ -23,6 +23,9 @@ import org.fbreader 0.14
 
 Page {
     id: root
+
+    allowedOrientations: Orientation.All
+
     property variant handler
     property variant modelIndex
     property variant imageSource
