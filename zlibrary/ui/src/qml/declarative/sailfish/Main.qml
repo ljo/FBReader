@@ -8,13 +8,7 @@ ApplicationWindow {
 
     initialPage: Component { MainPage { } }
 
-    cover: CoverBackground {
-    	 CoverPlaceholder {
-            text: "FBReader"
-            icon.source: "/usr/share/icons/hicolor/86x86/apps/harbour-fbreader.png"
-         }
-    }
-
+    cover: Qt.resolvedUrl("CoverPage.qml")
 
     Connections {
         target: dialogManager
