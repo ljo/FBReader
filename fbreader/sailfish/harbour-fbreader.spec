@@ -3,7 +3,7 @@
 Summary: E-book reader
 Name: harbour-fbreader
 Version: 0.99.6
-Release: 8
+Release: 9
 License: GPL
 Group: Qt/Qt
 URL: http://www.fbreader.org/
@@ -116,6 +116,8 @@ Direct reading from zip, tar, gzip and bzip2 archives is also supported.
 #%postun -p /sbin/ldconfig
 
 %changelog
+* Fri Sep 11 2015 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-9 
+- [SailfishOS] Allow all orientations (great for program code listings). Some CoverPage improvements before tablet adaptation. 
 * Mon Jun 22 2015 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-8 
 - [SailfishOS] Volume key page navigation now works. Thanks to George Nikandrov (gnikandrov) for providing the patch. 
 * Thu Oct 30 2014 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-7 
