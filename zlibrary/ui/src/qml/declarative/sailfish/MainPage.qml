@@ -38,6 +38,7 @@ Page {
 
         PullDownMenu {
             id: mainMenu
+            width: parent.width
             onActiveChanged: {
                 if ( active ){
                     applicationInfo.menuBar.recheckItems()
