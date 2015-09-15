@@ -21,7 +21,7 @@
 			<node name="collapseTree" toBeTranslated="true" value="Hide books" />
 		</node>
 		<node name="bookNode">
-			<node name="read" toBeTranslated="true" value="Read book" />
+			<node name="read" value="Läs bok" />
 			<node name="edit" toBeTranslated="true" value="Edit information" />
 			<node name="delete" toBeTranslated="true" value="Remove book" />
 		</node>
@@ -71,13 +71,15 @@
 		<node name="bookInfo" value="Bokinformation..." />
 		<node name="toc" value="Innehållsförteckning" />
 		<node name="library" toBeTranslated="true" value="Open library" />
-		<node name="networkLibrary" toBeTranslated="true" value="Network library" />
+		<node name="networkLibrary" value="Nätbibliotek (opds)" />
 		<node name="addBook" toBeTranslated="true" value="Open file..." />
-		<node name="showRecent" toBeTranslated="true" value="Recent books" />
+		<node name="showRecent" value="Tidigare böcker" />
+		<node name="night" value="Natt" />
+		<node name="day" value="Dag" />
 		<node name="library" value="Bibliotek">
 			<node name="library" value="Öppna" />
 			<node name="previousBook" value="Föregående bok" />
-			<node name="showRecent" value="Tidigare" />
+			<node name="showRecent" value="Tidigare böcker" />
 			<node name="addBook" value="Lägg till bok..." />
 			<node name="showHelp" value="Om FBReader" />
 		</node>
@@ -126,16 +128,16 @@
 			<node name="popup" toBeTranslated="true" value="Show Recent Books List" />
 		</node>
 		<node name="showRecent">
-			<node name="label" toBeTranslated="true" value="Recent Books" />
+			<node name="label" value="Tidigare böcker" />
 			<node name="tooltip" value="Visa tidigare bokhistorik" />
 		</node>
 		<node name="byAuthor">
-			<node name="label" toBeTranslated="true" value="By Author" />
-			<node name="tooltip" toBeTranslated="true" value="Organize Books by Author" />
+			<node name="label" value="Efter författare" />
+			<node name="tooltip" value="Visa böcker efter författare" />
 		</node>
 		<node name="byTag">
-			<node name="label" toBeTranslated="true" value="By Tag" />
-			<node name="tooltip" toBeTranslated="true" value="Organize Books by Tag" />
+			<node name="label" value="Efter etikett" />
+			<node name="tooltip" value="Visa böcker efter etikett" />
 		</node>
 		<node name="addBook">
 			<node name="label" toBeTranslated="true" value="Add File" />
