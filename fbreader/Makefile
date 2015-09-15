@@ -36,6 +36,13 @@ VARIANT = $(TARGET_ARCH)
 ifneq "$(RESOLUTION)" "" 
   VARIANT = $(TARGET_ARCH)_$(RESOLUTION)
 endif
+#ifeq "$(TARGET_ARCH)" "sailfish"
+#   ifeq "$(UNAME_MACHINE)" "armv7hl"
+# VARIANT = "64x64-sailfish-png"
+#   else
+# VARIANT = "96x96-sailfish-png"
+#   endif
+# endif
 EXTERNAL_FILE = "external.$(TARGET_ARCH).xml"
 ifeq "$(TARGET_ARCH)" "maemo"
   ifeq "$(UI_TYPE)" "qml"

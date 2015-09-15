@@ -8,8 +8,8 @@ CoverBackground {
         /*         text: "FBReader" */
         /* visible: applicationInfo.bookTitle.length > 50 ? false : true */
         visible: true
-        source: "/usr/share/icons/hicolor/86x86/apps/harbour-fbreader.png"
-        opacity: 0.4
+        source: "CoverPage.png"
+        opacity: 0.2
     }
 
     Label {

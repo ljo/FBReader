@@ -21,7 +21,7 @@ case "$1" in
 	win32)
 		platform=win32;
 		;;
-	symbian|meego|sailfish)
+	symbian|meego|sailfish|64x64-sailfish-png|96x96-sailfish-png)
 		platform=mobile;
 		;;
 	*)

@@ -28,7 +28,7 @@ case "$1" in
 		;;
 	pepperpad3)
 		;;
-	sailfish)
+	sailfish|64x64-sailfish-png|96x96-sailfish-png)
 		config_file=data/default/config.sailfish.xml
 		;;
 	zaurus_640x480)
