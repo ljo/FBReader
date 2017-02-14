@@ -38,7 +38,6 @@ Page {
 
         PullDownMenu {
             id: mainMenu
-            width: parent.width
             onActiveChanged: {
                 if ( active ){
                     applicationInfo.menuBar.recheckItems()
@@ -47,7 +46,6 @@ Page {
             Repeater {
                 model: applicationInfo.menuBar !== null ? applicationInfo.menuBar.items : null
                 MenuItem {
-                    parent: mainMenu
                     text: modelData
                     enabled: applicationInfo.menuBar.enabledItems.indexOf(modelData) !== -1
                     visible: applicationInfo.menuBar.visibleItems.indexOf(modelData) !== -1

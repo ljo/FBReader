@@ -65,9 +65,9 @@ Page {
             }
 
             onClicked: {
-                console.log("title", model.title,
-                            "activatable", model.activatable,
-                            "page", model.page)
+                console.log("title: ", model.title,
+                            "activatable: ", model.activatable,
+                            "page: ", model.page)
                 if (model.activatable) {
                     if (root.handler.activate(visualModel.modelIndex(index))) {
                         root.handler.finish();
@@ -143,7 +143,6 @@ Page {
                     "rootIndex": modelIndexToFetch,
                     "isTreeRoot": false
                 }
-                modelIndexToFetch = null
                 var page = pageStack.push("TreeDialogPage.qml", args)
             } else {
                 console.log(error)

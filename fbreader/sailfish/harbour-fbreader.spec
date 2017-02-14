@@ -3,7 +3,7 @@
 Summary: E-book reader
 Name: harbour-fbreader
 Version: 0.99.6
-Release: 10
+Release: 12
 License: GPL
 Group: Qt/Qt
 URL: http://www.fbreader.org/
@@ -11,7 +11,8 @@ Source0: %{name}-%{version}.tar.gz
 
 Packager: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>
 
-#BuildArch:armv7hl
+#BuildArch: armv7hl i486
+%define _arch armv7hl
 
 #Source: http://www.fbreader.org/fbreader-sources-%{version}.tgz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
@@ -46,13 +47,12 @@ Direct reading from zip, tar, gzip and bzip2 archives is also supported.
 
 %build
 #%qtc_qmake5
-#%{__make} %{?_smp_mflags} INSTALLDIR=%{_prefix} TARGET_ARCH=sailfish UI_TYPE=qml TARGET_STATUS=release	DESTDIR=$RPM_BUILD_ROOT UNAME_MACHINE=armv7hl
-%makeinstall INSTALLDIR=%{_prefix} TARGET_ARCH=sailfish UI_TYPE=qml TARGET_STATUS=release DESTDIR=$RPM_BUILD_ROOT UNAME_MACHINE=armv7hl
+#%{__make} %{?_smp_mflags} INSTALLDIR=%{_prefix} TARGET_ARCH=sailfish UI_TYPE=qml TARGET_STATUS=release	DESTDIR=$RPM_BUILD_ROOT UNAME_MACHINE=%{_arch}
+%makeinstall INSTALLDIR=%{_prefix} TARGET_ARCH=sailfish UI_TYPE=qml TARGET_STATUS=release DESTDIR=$RPM_BUILD_ROOT UNAME_MACHINE=%{_arch}
 
-# %{buildroot} -> $RPM_BUILD_ROOT
 %install
 %{__rm} -rf $RPM_BUILD_ROOT
-%makeinstall INSTALL_ROOT=$RPM_BUILD_ROOT INSTALLDIR=%{_prefix} TARGET_ARCH=sailfish UI_TYPE=qml TARGET_STATUS=release DESTDIR=$RPM_BUILD_ROOT UNAME_MACHINE=armv7hl
+%makeinstall INSTALL_ROOT=$RPM_BUILD_ROOT INSTALLDIR=%{_prefix} TARGET_ARCH=sailfish UI_TYPE=qml TARGET_STATUS=release DESTDIR=$RPM_BUILD_ROOT UNAME_MACHINE=%{_arch}
 
 %clean
 %{__rm} -rf $RPM_BUILD_ROOT
@@ -82,9 +82,16 @@ Direct reading from zip, tar, gzip and bzip2 archives is also supported.
 
 %{_datadir}/icons/hicolor/16x16/apps/%{name}.png
 %{_datadir}/icons/hicolor/22x22/apps/%{name}.png
+%{_datadir}/icons/hicolor/24x24/apps/%{name}.png
+%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 %{_datadir}/icons/hicolor/64x64/apps/%{name}.png
 %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
+%{_datadir}/icons/hicolor/108x108/apps/%{name}.png
+%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
+%{_datadir}/icons/hicolor/256x256/apps/%{name}.png
+%{_datadir}/icons/hicolor/512x512/apps/%{name}.png
+%{_datadir}/icons/hicolor/1024x1024/apps/%{name}.png
 
 %attr(755, root,root) %{_datadir}/%{name}
 %attr(644, root,root) %{_datadir}/%{name}/default/*
@@ -116,6 +123,10 @@ Direct reading from zip, tar, gzip and bzip2 archives is also supported.
 #%postun -p /sbin/ldconfig
 
 %changelog
+* Fri Feb 10 2017 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-12 
+- [SailfishOS] QT 5.6 adaptation only. Releasing new features goodies and i486 build have to wait due to conferences and eXist-db release.
+* Tue Nov 22 2016 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-11 
+- [SailfishOS] Some launcher icon generation adaptions. Restore landscape mode's narrow pulley.  
 * Tue Sep 15 2015 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-10 
 - [SailfishOS] New icon set provided by Oscillator, thanks. Some further CoverPage and pulldown improvements. 
 * Fri Sep 11 2015 Leif-Jöran Olsson <info@friprogramvarusyndikatet.se> - 0.99.6-9 
