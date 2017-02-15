@@ -36,13 +36,14 @@ VARIANT = $(TARGET_ARCH)
 ifneq "$(RESOLUTION)" "" 
   VARIANT = $(TARGET_ARCH)_$(RESOLUTION)
 endif
-#ifeq "$(TARGET_ARCH)" "sailfish"
-#   ifeq "$(UNAME_MACHINE)" "armv7hl"
-# VARIANT = "64x64-sailfish-png"
-#   else
-# VARIANT = "96x96-sailfish-png"
-#   endif
-# endif
+ifeq "$(TARGET_ARCH)" "sailfish"
+   ifeq "$(UNAME_MACHINE)" "armv7hl"
+	 SF_VARIANT = "64x64-sailfish-png"
+   else
+	 SF_VARIANT = "96x96-sailfish-png"
+   endif
+endif
+
 EXTERNAL_FILE = "external.$(TARGET_ARCH).xml"
 ifeq "$(TARGET_ARCH)" "maemo"
   ifeq "$(UI_TYPE)" "qml"
@@ -82,6 +83,8 @@ do_install:
 	@install -d $(DESTDIR)$(APPIMAGEDIR_REAL)
 	@install -m 0644 $(wildcard data/icons/toolbar/$(VARIANT)/*.*) $(DESTDIR)$(APPIMAGEDIR_REAL)
 	@install -m 0644 $(wildcard data/icons/filetree/$(VARIANT)/*.*) $(DESTDIR)$(APPIMAGEDIR_REAL)
+	@rm -f data/icons/booktree/sailfish
+	@ln -s $(SF_VARIANT) data/icons/booktree/sailfish 
 	@install -m 0644 $(wildcard data/icons/booktree/$(VARIANT)/*.*) $(DESTDIR)$(APPIMAGEDIR_REAL)
 	@echo 'Install $(TARGET_ARCH) ...'
 	@make -C $(TARGET_ARCH) RESOLUTION=$(RESOLUTION) install
