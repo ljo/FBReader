@@ -38,7 +38,7 @@ install: install_libs
 	@install -m 0644 ../data/icons/application/sailfish_22x22.png $(DESTDIR)$(SHAREDIR)/icons/hicolor/22x22/apps/$(FBREADER_NAME).png
 	@install -d $(DESTDIR)$(SHAREDIR)/icons/hicolor/24x24/apps
 	@install -m 0644 ../data/icons/application/sailfish_24x24.png $(DESTDIR)$(SHAREDIR)/icons/hicolor/24x24/apps/$(FBREADER_NAME).png
-	@install -d $(DESTDIR)$(SHAREDIR)/icons/hicolor/32x23/apps
+	@install -d $(DESTDIR)$(SHAREDIR)/icons/hicolor/32x32/apps
 	@install -m 0644 ../data/icons/application/sailfish_32x32.png $(DESTDIR)$(SHAREDIR)/icons/hicolor/32x32/apps/$(FBREADER_NAME).png
 	@install -d $(DESTDIR)$(SHAREDIR)/icons/hicolor/48x48/apps
 	@install -m 0644 ../data/icons/application/sailfish_48x48.png $(DESTDIR)$(SHAREDIR)/icons/hicolor/48x48/apps/$(FBREADER_NAME).png
