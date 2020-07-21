@@ -56,6 +56,7 @@ Before building FBReader, you should check (and maybe edit) 2 files:
         TARGET_ARCH = macosx                UI_TYPE = cocoa
         TARGET_ARCH = symbian               UI_TYPE = qtwidgets
         TARGET_ARCH = desktop               UI_TYPE = qtwidgets
+        TARGET_ARCH = sailfish              UI_TYPE = qml
 
   ** makefiles/arch/$(TARGET_ARCH).mk
      This file defines compiler name and location, headers and libraries
