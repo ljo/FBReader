@@ -3,7 +3,7 @@
 Summary: E-book reader
 Name: harbour-fbreader
 Version: 0.99.6
-Release: 12
+Release: 15
 License: GPL
 Group: Qt/Qt
 URL: http://www.fbreader.org/
@@ -20,19 +20,22 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 # >> macros
 %define __provides_exclude_from ^%{_datadir}/.*$
 %define __provides_exclude_from ^%{_libdir}/.*$
-%define __requires_exclude ^liblinebreak|liblinebreak.*|libfribidi|libfribidi.*$
+#%define __requires_exclude ^liblinebreak|liblinebreak.*|libfribidi|libfribidi.*$
 # << macros
 
 # Check out using
 #%ghost
 
-Requires: sailfishsilica-qt5 >= 0.10.9 
+Requires: sailfishsilica-qt5 >= 0.10.9
+Requires: fribidi
 BuildRequires: pkgconfig(Qt5Core) pkgconfig(Qt5Quick) pkgconfig(Qt5Qml) pkgconfig(Qt5Gui) pkgconfig(Qt5Network)
 
 BuildRequires: zlib-devel 
 BuildRequires: desktop-file-utils
 BuildRequires: bzip2-devel, expat-devel, sqlite-devel, libcurl-devel
 BuildRequires: libresourceqt-qt5-devel
+BuildRequires: fribidi-devel
+
 
 %description
 FBReader is an e-book reader.
@@ -64,19 +67,19 @@ Direct reading from zip, tar, gzip and bzip2 archives is also supported.
 %defattr(-, root, root, 0644)
 #%defattr(-, root, root, 0755)
 %attr(755, root,root) %{_bindir}/%{name}
-%attr(644, root,root) %{_libdir}/libfribidi.a
-%attr(644, root,root) %{_libdir}/libfribidi.so
-%attr(644, root,root) %{_libdir}/libfribidi.so.0
-%attr(644, root,root) %{_libdir}/libfribidi.so.0.3.5
-%attr(644, root,root) %{_libdir}/liblinebreak.a
+#%attr(644, root,root) %{_libdir}/libfribidi.a
+#%attr(644, root,root) %{_libdir}/libfribidi.so
+#%attr(644, root,root) %{_libdir}/libfribidi.so.0
+#%attr(644, root,root) %{_libdir}/libfribidi.so.0.3.5
+#%attr(644, root,root) %{_libdir}/liblinebreak.a
 %attr(644, root,root) %{_libdir}/liblinebreak.so
 %attr(644, root,root) %{_libdir}/liblinebreak.so.2
 %attr(644, root,root) %{_libdir}/liblinebreak.so.2.0.0
 
-%attr(644, root,root) %{_includedir}/linebreakdef.h
-%attr(644, root,root) %{_includedir}/linebreak.h
-%attr(755, root,root) %{_includedir}/fribidi
-%attr(644, root,root) %{_includedir}/fribidi/*
+#%attr(644, root,root) %{_includedir}/linebreakdef.h
+#%attr(644, root,root) %{_includedir}/linebreak.h
+#%attr(755, root,root) %{_includedir}/fribidi
+#%attr(644, root,root) %{_includedir}/fribidi/*
 
 %{_datadir}/applications/%{name}.desktop
 
